@@ -1,0 +1,90 @@
+function [imageArray, delta_int, intDiff, intStd, intOrder] = DrawHexSegment(window, intensityMap, intensityDots, seg, imageSecs, hexEdge, hexXpos, hexYpos)
+% Display the target segment.
+%   seg: matrix (N x 2) with the locations (x,y) of the target segment.
+%   imageSecs: duration of the display. Can be set in the settings
+%   function.
+%   hexEdge: length of an edge in a hexagon.
+%   hexXpos - hexYpos: position matrices for all the hexagons in an image.
+
+ifi=Screen('GetFlipInterval', window);
+waitframes = 1;
+waitduration = waitframes * ifi;
+
+vbl = Screen('Flip', window);
+vblendtime = vbl + imageSecs;
+
+% Get the size of the on screen window in pixels.
+[screenXpixels, screenYpixels] = Screen('WindowSize', window);
+
+frameCounter = 1;
+
+numDots = length(intensityDots);
+N = numDots^2;
+
+% Get the intensity order of the segment
+segIntOrderArray = nan(length(seg),1);
+for i=1:size(seg,1)
+    segIntOrderArray(i,:) = intensityDots(seg(i,1),seg(i,2));
+end
+intOrder = segIntOrderArray(1);
+
+% Flatten the intensity array for easier computations
+intensityDots = reshape(intensityDots, [N,1]);
+
+% Transform intensity keys to values
+for i=1:length(intensityMap)
+    intensityDots(intensityDots == intensityMap(i,1)) = intensityMap(i,2);
+end
+
+% Flatten the intensity array for easier computations
+intensityDots = reshape(intensityDots, [numDots,numDots]);
+
+avrgImgIntensity = mean(intensityDots,'all');
+
+segIntensityArray = nan(length(seg),1);
+for i=1:size(seg,1)
+    segIntensityArray(i,:) = intensityDots(seg(i,1),seg(i,2));
+end
+avrgSegIntensity = sum(segIntensityArray)/length(segIntensityArray);
+% Compute target segment's intensity difference from the mean
+intDiff = avrgSegIntensity - avrgImgIntensity; 
+% Compute std to see how many different components exist in a segment
+intStd = std(segIntensityArray);
+
+delta_int = nan(3,1);
+delta_int(1) = avrgImgIntensity;            % Save average img intensity
+delta_int(2) = avrgSegIntensity;            % Save average seg intensity
+delta_int(3) = avrgImgIntensity - avrgSegIntensity;  % Save difference
+
+while (vbl < vblendtime)
+
+    % Increment the counter
+    frameCounter = frameCounter + 1;
+
+    % Draw 10x10 dot grid given the positions on the screen
+
+    for i = 1:size(seg,1)
+        colNo = seg(i,1);
+        rowNo = seg(i,2);
+            
+        if rem(rowNo,2) == 0 % if row no is even, shift it
+            hexXposNew = hexXpos - (hexEdge/2)*sqrt(3);
+        elseif rem(rowNo,2) == 1
+            hexXposNew = hexXpos;
+        end
+        
+        % Get the corners of single hexagon
+        pointList = GetPointList(hexXposNew,hexYpos, hexEdge, colNo,rowNo);
+%         Screen('FillPoly', window, avrgSegIntensity, pointList);     
+        Screen('FillPoly', window, avrgImgIntensity, pointList);              
+%         DrawHexagonBorders(window, hexXposNew,hexYpos, hexEdge, colNo,rowNo)
+
+    end
+
+    vbl = Screen('Flip', window, vbl + (waitframes - 0.5) * ifi);
+    imageArray = Screen('GetImage', window, [hexXposNew(1)-(hexEdge*2) hexYpos(1)-hexEdge*2 hexXpos(end)+(hexEdge*2) hexYpos(end)+hexEdge*2]);    
+
+end
+
+end
+

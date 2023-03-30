@@ -1,0 +1,1423 @@
+\documentclass[10pt,xcolor=svgnames]{beamer} %Beamer
+\usepackage{palatino} %font type
+\usepackage{tikz}
+\usetikzlibrary{calc}
+%\usepackage[style=verbose,backend=biber]{biblatex}
+\usepackage[style=authoryear]{biblatex}
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+\usefonttheme{metropolis} %Type of slides
+\usefonttheme[onlymath]{serif} %font type Mathematical expressions
+\usetheme[progressbar=frametitle]{metropolis} %This adds a bar at the beginning of each section.
+
+\usepackage{appendixnumberbeamer} %enumerate each slide without counting the appendix
+\setbeamercolor{progress bar}{fg=Orange!70!Coral} %These are the colours of the progress bar. Notice that the names used are the svgnames
+\setbeamercolor{title separator}{fg=DarkSalmon} %This is the line colour in the title slide
+\setbeamercolor{structure}{fg=black} %Colour of the text of structure, numbers, items, blah. Not the big text.
+\setbeamercolor{normal text}{fg=black!87} %Colour of normal text
+\setbeamercolor{alerted text}{fg=DarkRed!60!Gainsboro} %Color of the alert box
+\setbeamercolor{example text}{fg=Maroon!70!Coral} %Colour of the Example block text
+
+
+\definecolor{backgroundExp}{RGB}{127.5,127.5, 127.5} %These are the colours of the background. Being this the main combination and so one. 
+\setbeamercolor{palette primary}{bg = backgroundExp, fg=white}
+\setbeamercolor{palette secondary}{bg=NavyBlue!50!DarkOliveGreen, fg=white}
+\setbeamercolor{palette tertiary}{bg=NavyBlue!40!Black, fg= white}
+\setbeamercolor{section in toc}{fg=NavyBlue!40!Black} %Color of the text in the table of contents (toc)
+
+%These next packages are the useful for Physics in general, you can add the extras here. 
+\usepackage{amsmath,amssymb}
+\usepackage{slashed}
+\usepackage{cite}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+\usepackage{geometry}
+\usepackage{xspace}
+
+
+\definecolor{mpigreen}{HTML}{007977}
+\setbeamercolor{frametitle}{bg=mpigreen}
+
+\definecolor{experimentBackground}{RGB}{127.5,127.5,127.5}
+
+\newcommand{\themename}{\textbf{\textsc{bluetemp}\xspace}}%metropolis}}\xspace}
+\titlegraphic{%
+  \begin{picture}(0,0)
+    \put(315,-200){\makebox(0,0)[rt]{\includegraphics[width=1cm]{logos/logoCPI.jpeg}}}
+  \end{picture}
+  \begin{picture}(0,0)
+    \put(280,-200){\makebox(0,0)[rt]{\includegraphics[width=4cm]{logos/logoMPI.png}}}
+  \end{picture}
+  \begin{picture}(0,0)
+    \put(80,-200){\makebox(0,0)[rt]{\includegraphics[width=3cm]{logos/logoUNI.png}}}
+  \end{picture}
+  }
+  
+
+\title{Characterizing Temporal Dynamics of Visual Perceptual Grouping}
+\author[Name]{Mehmet Yörüten \\
+            \textbf{Supervised by: } Shuchen Wu, Felix Wichmann, Eric Schulz \\ } %With inst, you can change the institution they belong
+\institute[uni]{\textit{M.Sc Student of Neural Information Processing} \\ University of Tübingen}
+\date{} 
+
+%References file
+\addbibresource{presentationRefs.bib}
+\begin{document}
+
+\maketitle
+\metroset{titleformat frame=smallcaps} %This changes the titles for small caps
+
+\begin{frame}{Outline}
+  \setbeamertemplate{section in toc}[sections numbered] %This is numbering the sections
+  \tableofcontents[hideallsubsections] %You can comment this line if you want to show the subsections in the table of contents
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Visual Grouping}
+
+\begin{frame}{Visual Grouping}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{pictures/tubingenPicture.jpeg}
+    % We see coarse structures at the first glance but finer details by staring at the picture for more time. 
+    \label{fig:tubingen}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Perceptual Organization}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{pictures/perceptualOrganization_1.png}
+            \label{fig:perceptualOrg_a}
+            \caption{}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{pictures/perceptualOrganization_2.png}
+            \caption{}
+            \label{figure:perceptualOrg_b}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.32\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{pictures/perceptualOrganization_3.png}
+            \caption{}
+            \label{figure:perceptualOrg_c}
+        \end{subfigure}
+    \caption{An image of a leopard (1a) can be segmented into several pieces (\ref{figure:perceptualOrg_b}). There are endless single parts to these scene  (\ref{figure:perceptualOrg_c}) but at the first glance we perceive only the certain parts of these image as segments. \\
+    {\footnotesize Adapted from \textcite{RN212}}
+        }
+    \label{fig:perceptual_org}
+    \end{figure}
+    
+\end{frame}
+
+\begin{frame}{Gestalt Principles}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.47\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{pictures/perceptualOrganization_4.png}
+            \label{figure:Gestalt1}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.47\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{pictures/perceptualOrganization_5.png}
+            \label{figure:Gestalt2}
+        \end{subfigure}
+        \hfill
+    \label{fig:GestaltPrincips}
+    \caption{Some Gestalt Principles describing the way we assemble the elements into groups\footnote{\footfullcite{RN212}}.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Global Precedence}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{pictures/globalPrecedence.png}
+        \caption{Faster identification of the global cues than the local cues\footnote{\footfullcite{kimchi2015perception}}.}
+        \label{fig:GlboalPrecedence}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}{Motivation}
+\begin{itemize}
+    \item Studying hierarchical visual grouping
+    \pause
+    \item How does hierarchical perceptual grouping behavior change with increasing exposure time?
+    \pause
+    \item Relating exposure time to computational resources attributed to an image segmentation problem.
+    \pause
+\end{itemize}
+    
+\metroset{block=fill}
+\begin{exampleblock}{\textsc{Hypothesis}}
+As more computational resources are allocated, perceptual grouping behavior gets refined and finer segments can be detected.
+\end{exampleblock}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stimuli}
+\begin{frame}{Stimuli}
+    \underline{\textsc{Criteria:}}
+    \begin{itemize}
+        \item We need images that induce no bias
+        \item There should be no semantic meaning assigned to the images
+        \item There should be no effect of object recognition
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[standout]{Generating Images}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{pictures/grid_init4.png}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}[standout]{Generating Images}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=\textwidth]{pictures/grid_init1.png}   
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=\textwidth]{pictures/grid_init2.png}
+        \end{subfigure}
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=\textwidth]{pictures/grid_init3.png}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=\textwidth]{pictures/grid_init4.png}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Generating Images}
+\begin{columns}
+    \column{0.6\textwidth}
+    \vspace{-1cm}
+    \begin{enumerate}
+        \item 10 x 10 grid pattern made of hexagons.
+        \vspace{1.5cm}
+        \item Assign 6 equally distant seed on the grid. 
+        \vspace{1.5cm}
+        \item Sample a variance from a normal distribution and add to the seed coordinates.
+    \end{enumerate}
+    \column{0.4\textwidth}
+    \vspace{-0.25cm}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{pictures/img3_cut0.png}
+    \end{figure}
+    \vspace{-0.7cm}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{pictures/img3_cut0_seeds.png}
+    \end{figure}
+    \vspace{-0.7cm}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{pictures/img3_cut0_seeds_var.png}
+    \end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Generating Images}
+\begin{columns}
+    \column{0.6\textwidth}
+    \begin{enumerate}
+        \setcounter{enumi}{3}
+        \vspace{-0.5cm}
+        \item Establish regions for each one of the seeds using Voronoi Diagram.
+        \vspace{2cm}
+        \item Map each of the groups to intensity values (contrast ratio 0.086).
+    \end{enumerate}
+    \column{0.4\textwidth}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{pictures/img3_cut0_seed_final.png}
+    \end{figure}
+    \vspace{-0.62cm}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{pictures/intensities.png}
+    \end{figure}
+    \vspace{-0.6cm}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{pictures/grid_init3.png}
+    \end{figure}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Generating Segments}
+        We need to find an algorithm that:
+        \begin{itemize}
+            \item Detects global segments prior to local segments.
+            \item Has hierarchical structure.
+            \item Represents the computational resources spent on the segmentation process.
+        \end{itemize}
+\end{frame}
+
+\section{Normalized Min Cut Algorithm}
+\begin{frame}{Graph Theory}
+    A graph $G = (V,E)$ is composed of a set \textit{V} of vertices (nodes) and set \textit{E} of edges.
+
+\begin{figure}  
+\centering
+\resizebox{8 cm}{!}{%
+    \begin{tikzpicture}
+      [node distance={15mm}, thick, main/.style = {draw, circle}]
+      \node[main] (6) at (1,10) {$v_6$};
+      \node[main] (4) at (4,8)  {$v_4$};
+      \node[main] (3) at (8,9)  {$v_3$};
+      \node[main] (1) at (11,8) {$v_1$};
+      \node[main] (2) at (9,6)  {$v_2$};
+      \node[main] (5) at (5,5)  {$v_5$};
+    
+    \draw (1) -- (2); 
+    \draw (1) -- (3); 
+    \draw (2) -- (5); 
+    \draw (2) -- (3); 
+    \draw (3) -- (4); 
+    \draw (4) -- (5); 
+    \draw (6) -- (4); 
+    
+    \end{tikzpicture}
+    }
+\end{figure}
+
+\begin{align*}
+    V &= \{ v_1,v_2, ..., v_6 \} \\
+    E &= \{(v_1,v_2),(v_1, v_3),(v_2, v_3),(v_2, v_5),(v_3,v_4),(v_4,v_5),(v_4,v_6)\}
+\end{align*}
+
+\end{frame}
+
+
+
+\begin{frame}{Graph Theory}
+    A graph can be detailed by assigning weights to the edges.
+
+\begin{figure}   
+\centering
+\resizebox{8 cm}{!}{%
+    \begin{tikzpicture}
+      [node distance={15mm}, thick, main/.style = {draw, circle}]
+      \node[main] (6) at (1,10) {$v_6$};
+      \node[main] (4) at (4,8)  {$v_4$};
+      \node[main] (3) at (8,9)  {$v_3$};
+      \node[main] (1) at (11,8) {$v_1$};
+      \node[main] (2) at (9,6)  {$v_2$};
+      \node[main] (5) at (5,5)  {$v_5$};
+    
+    \draw (1) -- node[midway, above, sloped] {$w_{1,2}$} (2); 
+    \draw (1) -- node[midway, above, sloped] {$w_{1,3}$} (3) ; 
+    \draw (2) -- node[midway, above, sloped] {$w_{2,5}$} (5) ; 
+    \draw (2) -- node[midway, above, sloped] {$w_{2,3}$} (3) ; 
+    \draw (3) -- node[midway, above, sloped] {$w_{3,4}$} (4) ; 
+    \draw (4) -- node[midway, above, sloped] {$w_{4,5}$} (5) ; 
+    \draw (6) -- node[midway, above, sloped] {$w_{6,4}$} (4); 
+    
+    \end{tikzpicture}
+    }
+\end{figure}
+
+For undirected graphs:
+\begin{equation*}
+    w_{i,j} = w_{j,i}
+\end{equation*}
+
+\end{frame}
+
+
+\begin{frame}{Cut}
+    \begin{columns}
+    \column{0.5\textwidth}
+        \centering
+            A graph $G = (V,E)$ can be partitioned into two disjoint sets A and B: \\
+        \begin{equation*}
+            A \cup B = V \text{ and } A \cap B = \emptyset     
+        \end{equation*}
+        
+        \begin{equation}
+            cut(A,B) = \sum_{u \in A, v \in B} w(u,v)    
+        \end{equation}
+    \column{0.5\textwidth}
+    \centering
+    \begin{figure}   
+        \centering
+        \resizebox{5 cm}{!}{%
+            \begin{tikzpicture}
+              [node distance={5mm}, thick, main/.style = {draw, circle}]
+              \node[main] (6) at (2,10) {$v_6$};
+              \node[main] (4) at (5,8)  {$v_4$};
+              \node[main] (3) at (8,9)  {$v_3$};
+              \node[main] (1) at (11,8) {$v_1$};
+              \node[main] (2) at (9,6)  {$v_2$};
+              \node[main] (5) at (6,5)  {$v_5$};
+            
+            \draw[line width = 1.8] (1) -- node[midway, above, sloped] {$w_{1,2}$} (2); 
+            \draw[line width = 1.8] (1) -- node[midway, above, sloped] {$w_{1,3}$} (3) ; 
+            \draw (2) -- node[midway, above, sloped] {$w_{2,5}$} (5) ; 
+            \draw[line width = 1.8] (2) -- node[midway, above, sloped] {$w_{2,3}$} (3) ; 
+            \draw (3) -- node[midway, above, sloped] {$w_{3,4}$} (4) ; 
+            \draw[line width = 1.8] (4) -- node[midway, above, sloped] {$w_{4,5}$} (5) ; 
+            \draw[line width = 1.8] (6) -- node[midway, above, sloped] {$w_{6,4}$} (4); 
+            \draw[dotted, ultra thick] ($ (3)!.5!(4)$) ++ (-10pt,30pt) -- ($ (5)!.5!(2)$) ++ (-10pt,-50pt); 
+            \end{tikzpicture}
+            }
+    \end{figure}
+    \begin{figure}   
+        \centering
+        \resizebox{5 cm}{!}{%
+            \begin{tikzpicture}
+              [node distance={5mm}, thick, main/.style = {draw, circle}]
+              \node[main] (6) at (2,10) {$v_6$};
+              \node[main] (4) at (5,8)  {$v_4$};
+              \node[main] (3) at (7,9)  {$v_3$};
+              \node[main] (1) at (10,8) {$v_1$};
+              \node[main] (2) at (8,6)  {$v_2$};
+              \node[main] (5) at (6,5)  {$v_5$};
+            
+            \draw[line width = 1.8] (1) -- node[midway, above, sloped] {$w_{1,2}$} (2); 
+            \draw[line width = 1.8] (1) -- node[midway, above, sloped] {$w_{1,3}$} (3) ; 
+            \draw[line width = 1.8] (2) -- node[midway, above, sloped] {$w_{2,3}$} (3) ; 
+            \draw[line width = 1.8] (4) -- node[midway, above, sloped] {$w_{4,5}$} (5) ; 
+            \draw[line width = 1.8] (6) -- node[midway, above, sloped] {$w_{6,4}$} (4); 
+            \end{tikzpicture}
+            }
+    \end{figure}
+    
+    \end{columns}
+    The optimal bipartitioning is the one that minimizes $cut$ values.
+\end{frame}
+
+\begin{frame}{Normalized Min Cut \footnote{\footfullcite{RN165}}}
+    \begin{align}
+        Ncut(A,B) & = \frac{cut(A,B)}{assoc(A,V)} + \frac{cut(A,B)}{assoc(B,V)} \\
+        cut(A,B) &= \sum_{u \in A, v \in B} w(u,v)\\
+        assoc(A,V) &= \sum_{u \in A, t\in V} w(u,t)
+    \end{align}
+    
+$cut(A,B)$: Total weight of the edges between two clusters \\
+$assoc(A,V)$: Total connection from nodes in A to all nodes in the graph \\
+$assoc(B,V)$: Total connection from nodes in B to all nodes in the graph \\
+
+\end{frame}
+
+\begin{frame}{Normalized Min Cut - \textit{Optimum Bipartition}}
+    \begin{align}
+        Ncut(A,B) & = \frac{cut(A,B)}{assoc(A,V)} + \frac{cut(A,B)}{assoc(B,V)} \\
+        min_xNcut(x) &= min_y\frac{y^T(D-W)-y}{y^T D y} \\
+        (D-W)y &= \lambda D y
+    \end{align}
+    
+\begin{itemize}
+    %\item $x$ is dimension indicator vector. $x_i = 1$ if node is in group $i$, $x_j$ if node is in group $j$. \\
+    \item $W$ (Adjacency Matrix) is $N \times N$ symmetrical matrix with $W(i,j) = w_{i,j} $.
+    \item $D$ (Degree Matrix) is $N \times N$ diagonal matrix with $d_i = \sum_j w(i,j) $ on its diagonal. \\
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Representing Images with Graph Networks}
+    \begin{itemize}
+        \item Represent each pixel as a node.
+        \item Connect each pair of pixels by an edge.
+    \end{itemize}
+
+\begin{figure}
+        \centering
+        \resizebox{6 cm}{!}{%
+        \begin{tikzpicture}[node distance={15mm}, thick,square/.style={regular polygon,regular polygon sides=4}] 
+        
+        \node(1) [fill=grey!10, square, draw] {$v_1$};
+        \node[main] (2) [fill=grey!10, square, draw, below of=1] {$v_2$}; 
+        \node[main] (3) [fill=grey!20, square, draw, below of=2] {$v_3$};
+        \node[main] (4) [fill=grey!23, square, draw, right of=1] {$v_4$}; 
+        \node[main] (5) [fill=grey!25, square, draw, below of=4] {$v_5$};
+        \node[main] (6) [square, draw, below of=5] {$v_6$};
+        \node[main] (7) [square, draw, right of=4] {$v_7$}; 
+        \node[main] (8) [square, draw, below of=7] {$v_8$};
+        \node[main] (9) [square, draw, below of=8] {$v_9$}; 
+        
+        \path (1) edge (2)
+              (1) edge [bend right=45] (3)
+              (1) edge (4)
+              (1) edge [bend left=45] (7)
+              
+              (2) edge (3)
+              (2) edge (5)
+              (2) edge [bend left=45] (8)
+              
+              (3) edge (6)
+              (3) edge [bend left=45] (9)
+              (4) edge (5)
+              (4) edge [bend right=45] (6)
+              (4) edge (7)
+              
+              (5) edge (6)
+              (5) edge (8)
+              (6) edge (9)
+              (7) edge (8)
+              (7) edge [bend right=45] (9)
+              (8) edge (9)
+        \end{tikzpicture}
+        }
+    \caption{Example representation of 3x3 image with a graph network}
+    \label{fig:my_label}
+    \end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Representing Images with Graph Networks}
+\begin{itemize}
+    \item Assign weights to each edge.
+    \item The weights represent the similarity of two pixels.
+\end{itemize}
+\begin{align}
+w_{ij} = e^{\dfrac{-||F_{(i)} - F_{(j)}||_2^2}{\sigma_I^2}}
+*
+    \begin{cases}
+    e^\dfrac{-||X_{(i)} - X_{(j)}||_2^2}{\sigma_X^2}, &  \text{if } ||X_{(i)} - X_{(j)}||_2 < r\\
+    0,                                               &  \text{otherwise}
+    \end{cases}
+\end{align}
+\\
+  \pause
+  -   $F$ is feature vector based on \textbf{brightness}, color, texture, or motion information. \\
+  \pause
+  -   $r$ is distance between two pixel nodes $i$ and $j$. \\ 
+  -   $w_{ij} = 0$ when $i$ and $j$ are apart more than $r$ \\
+  -   As $\sigma_I$ gets larger, the differences between the weights decrease \\
+\end{frame}
+
+\begin{frame}{Representing Images with Graph Networks}
+    \begin{itemize}
+        \item Assign computed weights to the edges.
+    \end{itemize}
+
+\begin{figure}
+        \centering
+        \resizebox{6 cm}{!}{%
+        \begin{tikzpicture}[node distance={15mm}, thick,square/.style={regular polygon,regular polygon sides=4}] 
+        
+        \node(1) [fill=grey!10, square, draw] {$v_1$};
+        \node[main] (2) [fill=grey!10, square, draw, below of=1] {$v_2$}; 
+        \node[main] (3) [fill=grey!20, square, draw, below of=2] {$v_3$};
+        \node[main] (4) [fill=grey!23, square, draw, right of=1] {$v_4$}; 
+        \node[main] (5) [fill=grey!25, square, draw, below of=4] {$v_5$};
+        \node[main] (6) [square, draw, below of=5] {$v_6$};
+        \node[main] (7) [square, draw, right of=4] {$v_7$}; 
+        \node[main] (8) [square, draw, below of=7] {$v_8$};
+        \node[main] (9) [square, draw, below of=8] {$v_9$}; 
+        
+        \path 
+              (3) edge (6)
+              (4) edge [bend right=45] (6)
+              (4) edge (7)
+              (5) edge (6)
+              (5) edge (8)
+
+              (1) edge [bend left=45] (7)
+              (2) edge [bend left=45] (8)
+              (3) edge [bend left=45] (9);
+        
+        \path[line width = 1.2pt]
+              (1) edge (4)
+              (2) edge (5);
+              
+        \path[line width = 2pt] 
+              (1) edge (2)
+              (1) edge [bend right=45] (3)
+              (2) edge (3)
+              (6) edge (9)
+              (7) edge (8)
+              (7) edge [bend right=45] (9)
+              (8) edge (9)
+              (4) edge (5);
+              
+        \end{tikzpicture}
+        }
+    \caption{Representation of 3x3 image with a weighted graph network}
+    \label{fig:image_graph_weighted}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}{Segmentation with Norm Min Cut}
+    \begin{figure}[ht!]
+    \hspace*{-1cm} 
+    \centering
+        \begin{subfigure}{0.3\textwidth}
+        \vspace{-0.5cm}
+        \centering
+        \begin{tikzpicture}[node distance={12mm},  scale=1, thick, every square/.style={regular polygon,regular polygon sides=4}, transform shape]
+        
+        \node(1) [fill=grey!10, square, draw] {$v_1$};
+        \node[main] (2) [fill=grey!10, square, draw, below of=1] {$v_2$}; 
+        \node[main] (3) [fill=grey!14, square, draw, below of=2] {$v_3$};
+        \node[main] (4) [fill=grey!23, square, draw, right of=1] {$v_4$}; 
+        \node[main] (5) [fill=grey!25, square, draw, below of=4] {$v_5$};
+        \node[main] (6) [square, draw, below of=5] {$v_6$};
+        \node[main] (7) [square, draw, right of=4] {$v_7$}; 
+        \node[main] (8) [square, draw, below of=7] {$v_8$};
+        \node[main] (9) [square, draw, below of=8] {$v_9$}; 
+        
+        \path (3) edge (6)
+              (4) edge [bend right=45] (6)
+              (4) edge (7)
+              (5) edge (6)
+              (5) edge (8)
+
+              (1) edge [bend left=45] (7)
+              (2) edge [bend left=45] (8)
+              (3) edge [bend left=45] (9);
+        
+        \path[line width = 1.2pt]
+              (1) edge (4)
+              (2) edge (5)
+              (2) edge (3);
+              
+        \path[line width = 2pt] 
+              (1) edge (2)
+              (1) edge [bend right=45] (3)
+              (2) edge (3)
+              (6) edge (9)
+              (7) edge (8)
+              (7) edge [bend right=45] (9)
+              (8) edge (9)
+              (4) edge (5);
+              
+            
+        \end{tikzpicture}
+        \caption{Graph before cut}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.3\textwidth}
+        \centering
+            \begin{tikzpicture}[node distance={12mm},  scale=1, thick, every square/.style={regular polygon,regular polygon sides=4}, transform shape]
+                \node(1) [fill=grey!10, square, draw] {$v_1$};
+                \node[main] (2) [fill=grey!10, square, draw, below of=1] {$v_2$}; 
+                \node[main] (3) [fill=grey!14, square, draw, below of=2] {$v_3$};
+                \node[main] (4) [fill=grey!23, square, draw, right of=1] {$v_4$}; 
+                \node[main] (5) [fill=grey!25, square, draw, below of=4] {$v_5$};
+                \node[main] (6) [square, draw, below of=5] {$v_6$};
+                \node[main] (7) [square, draw, right of=4] {$v_7$}; 
+                \node[main] (8) [square, draw, below of=7] {$v_8$};
+                \node[main] (9) [square, draw, below of=8] {$v_9$}; 
+                
+            \path[line width = 2pt] 
+                  (1) edge (2)
+                  (1) edge [bend right=45] (3)
+                  (2) edge (3)
+                  (4) edge (5)
+                  (7) edge (8)
+                  (8) edge (9)
+                  (6) edge (9);
+
+            \path[line width = 1.2pt] 
+                  (1) edge (4)
+                  (2) edge (5);
+                  
+                                   
+ 
+            \end{tikzpicture}
+            \caption{Graph after the first cut}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.32\textwidth}
+        \centering
+            \begin{tikzpicture}[node distance={12mm},  scale=1, thick, every square/.style={regular polygon,regular polygon sides=4}, transform shape] 
+        
+                \node(1) [fill=grey!10, square, draw] {$v_1$};
+                \node[main] (2) [fill=grey!10, square, draw, below of=1] {$v_2$}; 
+                \node[main] (3) [fill=grey!14, square, draw, below of=2] {$v_3$};
+                \node[main] (4) [fill=grey!23, square, draw, right of=1] {$v_4$}; 
+                \node[main] (5) [fill=grey!25, square, draw, below of=4] {$v_5$};
+                \node[main] (6) [square, draw, below of=5] {$v_6$};
+                \node[main] (7) [square, draw, right of=4] {$v_7$}; 
+                \node[main] (8) [square, draw, below of=7] {$v_8$};
+                \node[main] (9) [square, draw, below of=8] {$v_9$}; 
+                
+                \path[line width = 2pt] (1) edge (2)
+                      (2) edge (3)
+                      (4) edge (5)
+                      
+                      (7) edge (8)
+                      (8) edge (9)
+                      (6) edge (9)
+              
+            \end{tikzpicture}
+        \caption{Graph after the second cut}
+        \end{subfigure}
+    \caption{An example segmentation of a graph}
+    \end{figure}
+    
+        
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Getting Segments}
+
+\begin{frame}{Getting Segments}
+\begin{enumerate}
+    \item Apply Normalized Min Cut algorithm to find the ground truth segments.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Getting Segments - \textit{Normalized Min Cut}}
+\begin{figure}
+    \hspace*{-1em}
+    \vspace*{-1em}
+    \begin{tikzpicture}
+      [
+        grow                    = right,
+        sibling distance        = 14em,
+        level distance          = 17em,
+        edge from parent/.style = {draw, -latex},
+        every node/.style       = {font=\footnotesize},
+        scale = 0.46,
+        sloped
+      ]
+      \node(0) {\includegraphics[width=0.2\textwidth]{pictures/grid_init4.png}}
+            child {node (seg1) {\includegraphics[width=0.2\textwidth]{pictures/seg_2_cut1.png}}
+                }
+            child {node (seg2) {\includegraphics[width=0.2\textwidth]{pictures/seg_3_cut1.png}}
+                child {node (segLastBottom) {\includegraphics[width=0.2\textwidth]{pictures/seg_4_cut2.png}}}
+                child {node (segLastTop) {\includegraphics[width=0.2\textwidth]{pictures/seg_5_cut2.png}}
+                    child {node (seg7) {\includegraphics[width=0.2\textwidth]{pictures/seg_7_cut3.png}}}
+                    child {node (seg6) {\includegraphics[width=0.2\textwidth]{pictures/seg_6_cut3.png}}}
+                }
+                };
+        \node (Cut1) [above of=seg2, yshift=0.7cm] {Cut 1};
+        \node (Cut2) [above of=segLastTop, yshift=0.5cm] {Cut 2};
+        \node (Cut3) [above of=seg6, yshift=0.5cm] {Cut 3};
+    \end{tikzpicture}
+    \caption{First three steps of segmentation}
+    \label{fig:gridSegmentationExample}
+    
+\end{figure}
+\end{frame}
+
+\begin{frame}{Getting Segments}
+\begin{enumerate}
+    \item Apply Normalized Min Cut algorithm to find the ground truth segments.
+    \item Assign cut orders depending on the \textit{Ncut} value.
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Getting Segments}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        [
+            level 1/.style = {red, sibling distance = 4cm},
+            level 2/.style = {blue, sibling distance = 3.8cm},
+            level 3/.style = {orange, sibling distance = 3.6cm},
+            level 4/.style = {brown, sibling distance = 2cm},
+            every node/.style       = {font=\footnotesize}
+        ]
+        \node(0) [text width=2cm]{\centering Image\\\centering \smaller($nCut=0.001$)}
+            child {node {segment 1}
+            }
+            child {node [text width=2cm]{segment 2\\\smaller($nCut=0.009$)}
+            child {node {segment 3}}
+            child {node [text width=2cm] {segment 4\\\smaller ($nCut=0.02$)}
+                child {node [text width=2cm] {segment 5\\\smaller($nCut=0.08$)}
+                    child {node {segment 7}}
+                    child {node {segment 8}}}
+                child {node [text width=2cm] {segment 6\\\smaller($nCut=0.1$)}
+                    child {node {segment 9}}
+                    child {node {segment 10}}
+                    }
+                }
+                };
+                
+        \draw[dotted, ultra thick, transform canvas={xshift=-1em}] ($ (0)!.5!(0-2)$) ++ (+20pt, 0) -- ($ (0)!.5!(0-1) $) ++ (-50pt,0) node[right, xshift=9.6cm] (cut1) {Cut 1}; 
+        \draw[dotted, ultra thick,transform canvas={xshift=-1em}] ($ (0-2)!.5!(0-2-2)$) ++ (20pt,0) -- ($ (0-2)!.5!(0-2-1) $) node[right, below of=cut1, yshift=-0.5cm] (cut2) {Cut 2}; 
+        \draw[dotted, ultra thick,transform canvas={xshift=-1em}] ($ (0-2-2)!.5!(0-2-2-2)$) ++ (20pt,0) -- ($ (0-2-2)!.5!(0-2-2-1) $) node[right, below of=cut2, yshift=-0.5cm] (cut3) {Cut 3};
+        \draw[dotted, ultra thick,transform canvas={xshift=-1em}] ($ (0-2-2-1)!.5!(0-2-2-1-2)$) ++ (20pt,0) -- ($ (0-2-2-1)!.5!(0-2-2-1-1) $) node[right, xshift=+1.8cm] (cut4) {Cut 4};
+        \draw[dotted, ultra thick,transform canvas={xshift=-1em}] ($ (0-2-2-2)!.5!(0-2-2-2-2)$) ++ (20pt,0) -- ($ (0-2-2-2)!.5!(0-2-2-2-1) $) node[right, below of=cut3, yshift=-0.5cm] (cut5) {Cut 5};
+    \end{tikzpicture}
+    \caption{Found segments}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Getting Segments}
+\begin{enumerate}
+    \item Apply Normalized Min Cut algorithm to find the ground truth segments.
+    \item Assign cut orders depending on the \textit{Ncut} value.
+    \item Stop when all the segments are found.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Getting Segments}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        [
+            level 1/.style = {red, sibling distance = 4cm},
+            level 2/.style = {blue, sibling distance = 3.8cm},
+            level 3/.style = {orange, sibling distance = 3.6cm},
+            level 4/.style = {brown, sibling distance = 2cm},
+            every node/.style       = {font=\footnotesize}
+        ]
+        \node(0) [text width=2cm]{\centering Image\\\centering \smaller($nCut=0.001$)}
+            child {node {segment 1}
+            }
+            child {node [text width=2cm]{segment 2\\\smaller($nCut=0.009$)}
+            child {node {segment 3}}
+            child {node [text width=2cm] {segment 4\\\smaller ($nCut=0.02$)}
+                child {node [text width=2cm] {segment 5\\\smaller($nCut=0.08$)}
+                    child {node {segment 7}}
+                    child {node {segment 8}}}
+                child {node [text width=2cm] {segment 6\\\smaller($nCut=0.1$)}
+                    child {node {segment 9}}
+                    child {node {segment 10}}
+                    }
+                }
+                };
+        \draw[dashed,rounded corners=2, red]($(0-1)+(-.75,+.25)$)rectangle($(0-1)+(.75,-.25)$); % Draw rectangles from northwest to southeast
+        \draw[dashed,rounded corners=2, red]($(0-2-1)+(-.75,+.25)$)rectangle($(0-2-1)+(.75,-.25)$);     
+        \draw[dashed,rounded corners=2, red]($(0-2-2-2-2)+(-.75,+.25)$)rectangle($(0-2-2-2-2)+(.75,-.25)$); 
+        \draw[dashed,rounded corners=2, red]($(0-2-2-2-1)+(-.75,+.25)$)rectangle($(0-2-2-2-1)+(.75,-.25)$); 
+        \draw[dashed,rounded corners=2, red]($(0-2-2-1-1)+(-.75,+.25)$)rectangle($(0-2-2-1-1)+(.75,-.25)$); 
+        \draw[dashed,rounded corners=2, red]($(0-2-2-1-2)+(-.75,+.25)$)rectangle($(0-2-2-1-2)+(.75,-.25)$); 
+        \draw[dotted, ultra thick, transform canvas={xshift=-1em}] ($ (0)!.5!(0-2)$) ++ (+20pt, 0) -- ($ (0)!.5!(0-1) $) ++ (-50pt,0) node[right, xshift=9.6cm] (cut1) {Cut 1}; 
+        \draw[dotted, ultra thick,transform canvas={xshift=-1em}] ($ (0-2)!.5!(0-2-2)$) ++ (20pt,0) -- ($ (0-2)!.5!(0-2-1) $) node[right, below of=cut1, yshift=-0.5cm] (cut2) {Cut 2}; 
+        \draw[dotted, ultra thick,transform canvas={xshift=-1em}] ($ (0-2-2)!.5!(0-2-2-2)$) ++ (20pt,0) -- ($ (0-2-2)!.5!(0-2-2-1) $) node[right, below of=cut2, yshift=-0.5cm] (cut3) {Cut 3};
+        \draw[dotted, ultra thick,transform canvas={xshift=-1em}] ($ (0-2-2-1)!.5!(0-2-2-1-2)$) ++ (20pt,0) -- ($ (0-2-2-1)!.5!(0-2-2-1-1) $) node[right, xshift=+1.8cm] (cut4) {Cut 4};
+        \draw[dotted, ultra thick,transform canvas={xshift=-1em}] ($ (0-2-2-2)!.5!(0-2-2-2-2)$) ++ (20pt,0) -- ($ (0-2-2-2)!.5!(0-2-2-2-1) $) node[right, below of=cut3, yshift=-0.5cm] (cut5) {Cut 5};
+    \end{tikzpicture}
+    \caption{Found segments}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Getting Segments}
+\begin{enumerate}
+    \item Apply Normalized Min Cut algorithm to find the ground truth segments.
+    \item Assign cut orders depending on the \textit{Ncut} value.
+    \item Stop when all the segments are found.
+    \item Present segments depending on the cut order (5 cuts).
+    \item Display the image with the average intensity of the initial image.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[standout]{Displaying Segments - \textit{Cut Order 4}}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=0.8\textwidth]{pictures/grid_init4.png}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+            \centering
+            \includegraphics[width=0.8\textwidth]{pictures/seg_5_cut4.png}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Paradigm}
+\begin{frame}{Contrast Sensitivity Task}
+    \begin{figure}
+    \centering
+        \includegraphics[width = \textwidth]{pictures/thresholdExpProcedure.png}   
+    \caption{\footnotesize Contrast Sensitivity Experiment}
+    \end{figure}    
+
+    \begin{itemize}
+        \item Present 10x10 grid pattern with six different intensities
+        \item Segment borders remain same
+        \item Staircase Method (QUEST) to get contrast difference between segments ($\delta I$)
+        \item "Did you detect 6 segments?"
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Contrast Sensitivity Task - Psychometric Function}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=1.2\textwidth]{pictures/thrExp_PC.png}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+            \centering
+            \includegraphics[width=1.2\textwidth]{pictures/thrExp_pdf.png}
+        \end{subfigure}
+        \label{fig:psychometric_pdf}
+        \caption{Psychometric and posterior distribution (PDF) functions}
+    \end{figure}
+
+    \begin{itemize}
+        \item Number of Trials:	  100
+        \item Threshold Criterion: 0.9
+        \item Beta:		  3.5 (Slope of the curve)
+        \item Delta\Lapse:	 .01 (Probability of making mistakes above threshold)
+        \item Gamma:		 .5 (Yes/No Task)        
+        \item Create graded intensity levels with fixed intervals
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[standout]
+\begin{figure}
+    \begin{tikzpicture}
+        %% Upper left
+        \draw[thick] (-5,-5) -- (-4,-5);
+        \draw[thick] (-5,-5) -- (-5,-6);
+        %% Upper Right
+        \draw[thick] (-2,-5) -- (-1,-5);
+        \draw[thick] (-1,-5) -- (-1,-6);
+        %% Bottom Left
+        \draw[thick] (-5,-9) -- (-4,-9);
+        \draw[thick] (-5,-9) -- (-5,-8);
+        %% Bottom Right
+        \draw[thick] (-2,-9) -- (-1,-9);
+        \draw[thick] (-1,-9) -- (-1,-8);
+
+    \end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}[standout]
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{pictures/grid_init4.png}
+    \label{fig:exp_Img}
+\end{figure}
+\end{frame}
+
+\begin{frame}[standout]
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{pictures/mask.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[standout]
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{pictures/seg_5_cut4.png}
+    \label{fig:exp_Seg}
+\end{figure}
+\end{frame}
+
+\begin{frame}[standout]
++
+\end{frame}
+
+\begin{frame}[standout]
+\color{black} +
+\end{frame}
+
+\begin{frame}[standout]
+\end{frame}
+
+
+\begin{frame}{Procedure}
+\begin{figure}
+\centering
+    \includegraphics[width = \textwidth]{pictures/ExperimentalProcedure.png}   
+\caption{\footnotesize Experimental Procedure}
+\end{figure}
+
+\begin{itemize}
+    \footnotesize
+    \item Present 10x10 grid pattern with six different intensities assigned randomly to each of groups 
+    \item Present segments in average intensity value of the image
+    \item Ask "Did you see the presented segment in the previously shown image?" (Y/N)
+    \item Measure accuracy and reaction time (RT)
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[standout]{Correct Answer - \textit{Cut Order 1}}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=0.8\textwidth]{pictures/grid_init4.png}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+            \centering
+            \includegraphics[width=0.8\textwidth]{pictures/seg_2_cut1.png}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}[standout]{Correct Answer - \textit{Cut Order 3}}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=0.8\textwidth]{pictures/grid_init4.png}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+            \centering
+            \includegraphics[width=0.8\textwidth]{pictures/seg_4_cut3.png}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Control Condition}
+    \begin{itemize}
+        \item Randomly choose a segment matching the cut order, from the pre-generated image set.
+        \item Rotate  $90^\circ$, $180^\circ$, or $270^\circ$. 
+        \item Do cross correlation with the borders.
+        \item Check if the foil borders overlap with any of the segments from the original image.  
+        \item If the overlap exceeds threshold, find another segment from another trial.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[standout]{Control Condition - \textit{Cut Order 3}}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+        \centering
+            \includegraphics[width=0.8\textwidth]{pictures/grid_init4.png}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+            \centering 
+            \rotatebox[origin=c]{180}{\includegraphics[width=0.8\textwidth]{pictures/cut3_control.png}}
+        \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Design}
+    \begin{itemize}
+        \item 5 (Cut Order) x 2 (Exposure Time) x 2 (Control) Conditions
+        \item 25 Blocks and 2000 Trials in total.
+        \item Show average accuracy in the end of the blocks
+        \item Experiment duration $\approx$ 4 hours
+        \item High accuracy \& shorter RT expected for the segments in the higher level
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Variables}
+    \begin{itemize}
+        \item Cut No
+        \item Exposure Time
+        \item Segment Size
+        \item Segment Center’s Distance to Center of the Image
+        \item Intensity Difference
+        \item Intensity Sd
+        \item Ncut Value
+        \item Stability
+        \item Original Segment Intensity – Presented Intensity
+    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Parameters}
+\begin{frame}{Parameters}
+    \begin{align}
+        w_{ij} = e^{\dfrac{-||F_{(i)} - F_{(j)}||_2^2}{\sigma_I^2}}
+        *
+            \begin{cases}
+            e^\dfrac{-||X_{(i)} - X_{(j)}||_2^2}{\sigma_X^2}, &  \text{if} ||X_{(i)} - X_{(j)}||_2 < r\\
+            0,                                               &  \text{otherwise}
+            \end{cases}
+    \end{align}
+    \begin{itemize}
+        \item Number of cuts can be translated into computational resources spent. More iteration is needed to detect finer segments.
+        \item First cut refers to the most salient segments.
+        \item $\sigma_I$: Let more distinct segments to be grouped together.
+        \item $\sigma_x$: Effect of distance between two pixels on the weight.
+        \item $nCut$ Value: Where to stop segmentation
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Pilot - Exposure Times}
+    \begin{figure} 
+        \hspace*{-0.5cm}
+        \centering
+        \includegraphics[width=1.1\textwidth]{pictures/ExpTimeComparison.png}
+        \caption{Compare Exposure Times}
+        \label{fig:comp_exposure_times}
+    \end{figure}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Initial Results}
+
+\begin{frame}{SW - Accuracy}
+    \begin{figure}
+        \hspace*{-1cm} 
+        \centering
+        \includegraphics[width = 1.1\textwidth]{pictures/sw_test.png}
+        \caption{Accuracy over cut numbers in test trials}
+        \label{fig:sw_test_acc}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}{Effect on Accuracy}
+    \begin{figure}
+        \hspace*{-1cm} 
+        \centering
+        \includegraphics[width = \textwidth]{pictures/sw_coefficients_int.png}
+        \caption{Interaction Effect}
+        \label{fig:sw_coefficients_int}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{SW - Accuracy}
+    \begin{figure}
+        \hspace*{-1cm} 
+        \centering
+        \includegraphics[width = 1.1\textwidth]{pictures/sw_control.png}
+        \caption{Accuracy over cut numbers in control trials}
+        \label{fig:sw_cont_acc}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Effect on Accuracy}
+    \begin{figure}
+        \hspace*{-1cm} 
+        \centering
+        \includegraphics[width = \textwidth]{pictures/sw_cont_coefficients_othrs_sprt.png}
+        \caption{Main Effects of Predictors}
+        \label{fig:sw_coefficients}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{MY - Accuracy}
+    \begin{figure}
+        \hspace*{-1cm} 
+        \centering
+        \includegraphics[width = 1.2\textwidth]{pictures/my_test.png}
+        \caption{Accuracy over cut number in test trials}
+        \label{fig:my_test}
+    \end{figure}    
+\end{frame}
+
+\begin{frame}{MY - Coefficients}
+    \begin{figure}
+        \hspace*{-1cm} 
+        \centering
+        \includegraphics[width = 1.1\textwidth]{pictures/my_coefficients_int.png}
+        \caption{Effect of main predictors in test condition}
+        \label{fig:my_cont_coeffs}
+    \end{figure}    
+\end{frame}
+
+\begin{frame}{MY - Accuracy}
+    \begin{figure}
+        \hspace*{-1cm} 
+        \centering
+        \includegraphics[width = 1.1\textwidth]{pictures/my_control.png}
+        \caption{Accuracy over cut number in control trials}
+        \label{fig:my_cont}
+    \end{figure}    
+\end{frame}
+
+\begin{frame}{MY - Coefficients}
+    \begin{figure}
+        \hspace*{-1cm} 
+        \centering
+        \includegraphics[width = 1.1\textwidth]{pictures/my_cont_coefficients_othrs_sprt.png}
+        \caption{Effect of predictors in control condition}
+        \label{fig:my_cont_coeffs}
+    \end{figure}    
+\end{frame}
+
+\begin{frame}{MY - Key Presses}
+    \begin{figure}
+        \centering
+        \includegraphics[width = 0.6\textwidth]{pictures/my_key_press_dist.png}
+        \caption{Key Press Distribution}
+        \label{fig:my_key_press}
+    \end{figure}    
+\end{frame}
+
+
+\begin{frame}
+\frametitle{References}
+    \printbibliography
+\end{frame}
+
+\begin{frame}{Questions}
+    \centering
+    \huge Thank You! \\
+    \huge Questions?
+\end{frame}
+
+
+
+\begin{frame}{Segment Analyses}
+    \begin{figure}
+        \hspace*{-0.8cm}
+        \centering
+        \includegraphics[width = 1.1\textwidth]{pictures/intensity_order.png}
+        \caption{Distribution of intensity orders for each cut number}
+        \label{fig:intensity_order}
+    \end{figure}
+\end{frame}
+
+
+\section{Graph Theory}
+\begin{frame}{Graph Theory}
+    A graph $G = (V,E)$ is composed of a set \textit{V} of vertices (nodes) and set \textit{E} of edges.
+
+\begin{figure}  
+\centering
+\resizebox{8 cm}{!}{%
+    \begin{tikzpicture}
+      [node distance={15mm}, thick, main/.style = {draw, circle}]
+      \node[main] (6) at (1,10) {$v_6$};
+      \node[main] (4) at (4,8)  {$v_4$};
+      \node[main] (3) at (8,9)  {$v_3$};
+      \node[main] (1) at (11,8) {$v_1$};
+      \node[main] (2) at (9,6)  {$v_2$};
+      \node[main] (5) at (5,5)  {$v_5$};
+    
+    \draw (1) -- (2); 
+    \draw (1) -- (3); 
+    \draw (2) -- (5); 
+    \draw (2) -- (3); 
+    \draw (3) -- (4); 
+    \draw (4) -- (5); 
+    \draw (6) -- (4); 
+    
+    \end{tikzpicture}
+    }
+\end{figure}
+
+\begin{align*}
+    V &= \{ v_1,v_2, ..., v_6 \} \\
+    E &= \{(v_1,v_2),(v_1, v_3),(v_2, v_3),(v_2, v_5),(v_3,v_4),(v_4,v_5),(v_4,v_6)\}
+\end{align*}
+
+\end{frame}
+
+
+\begin{frame}{Graph Theory}
+    A graph can be detailed by assigning weights to the edges.
+
+\begin{figure}   
+\centering
+\resizebox{8 cm}{!}{%
+    \begin{tikzpicture}
+      [node distance={15mm}, thick, main/.style = {draw, circle}]
+      \node[main] (6) at (1,10) {$v_6$};
+      \node[main] (4) at (4,8)  {$v_4$};
+      \node[main] (3) at (8,9)  {$v_3$};
+      \node[main] (1) at (11,8) {$v_1$};
+      \node[main] (2) at (9,6)  {$v_2$};
+      \node[main] (5) at (5,5)  {$v_5$};
+    
+    \draw (1) -- node[midway, above, sloped] {$w_{1,2}$} (2); 
+    \draw (1) -- node[midway, above, sloped] {$w_{1,3}$} (3) ; 
+    \draw (2) -- node[midway, above, sloped] {$w_{2,5}$} (5) ; 
+    \draw (2) -- node[midway, above, sloped] {$w_{2,3}$} (3) ; 
+    \draw (3) -- node[midway, above, sloped] {$w_{3,4}$} (4) ; 
+    \draw (4) -- node[midway, above, sloped] {$w_{4,5}$} (5) ; 
+    \draw (6) -- node[midway, above, sloped] {$w_{6,4}$} (4); 
+    
+    \end{tikzpicture}
+    }
+\end{figure}
+
+For undirected graphs:
+\begin{equation*}
+    w_{i,j} = w_{j,i}
+\end{equation*}
+
+\end{frame}
+
+
+\begin{frame}{Cut}
+    \begin{columns}
+    \column{0.5\textwidth}
+        \centering
+            A graph $G = (V,E)$ can be partitioned into two disjoint sets A and B: \\
+        \begin{equation*}
+            A \cup B = V \text{ and } A \cap B = \emptyset     
+        \end{equation*}
+        
+        \begin{equation}
+            cut(A,B) = \sum_{u \in A, v \in B} w(u,v)    
+        \end{equation}
+    \column{0.5\textwidth}
+    \centering
+    \begin{figure}   
+        \centering
+        \resizebox{5 cm}{!}{%
+            \begin{tikzpicture}
+              [node distance={5mm}, thick, main/.style = {draw, circle}]
+              \node[main] (6) at (2,10) {$v_6$};
+              \node[main] (4) at (5,8)  {$v_4$};
+              \node[main] (3) at (8,9)  {$v_3$};
+              \node[main] (1) at (11,8) {$v_1$};
+              \node[main] (2) at (9,6)  {$v_2$};
+              \node[main] (5) at (6,5)  {$v_5$};
+            
+            \draw[line width = 1.8] (1) -- node[midway, above, sloped] {$w_{1,2}$} (2); 
+            \draw[line width = 1.8] (1) -- node[midway, above, sloped] {$w_{1,3}$} (3) ; 
+            \draw (2) -- node[midway, above, sloped] {$w_{2,5}$} (5) ; 
+            \draw[line width = 1.8] (2) -- node[midway, above, sloped] {$w_{2,3}$} (3) ; 
+            \draw (3) -- node[midway, above, sloped] {$w_{3,4}$} (4) ; 
+            \draw[line width = 1.8] (4) -- node[midway, above, sloped] {$w_{4,5}$} (5) ; 
+            \draw[line width = 1.8] (6) -- node[midway, above, sloped] {$w_{6,4}$} (4); 
+            \draw[dotted, ultra thick] ($ (3)!.5!(4)$) ++ (-10pt,30pt) -- ($ (5)!.5!(2)$) ++ (-10pt,-50pt); 
+            \end{tikzpicture}
+            }
+    \end{figure}
+    \begin{figure}   
+        \centering
+        \resizebox{5 cm}{!}{%
+            \begin{tikzpicture}
+              [node distance={5mm}, thick, main/.style = {draw, circle}]
+              \node[main] (6) at (2,10) {$v_6$};
+              \node[main] (4) at (5,8)  {$v_4$};
+              \node[main] (3) at (7,9)  {$v_3$};
+              \node[main] (1) at (10,8) {$v_1$};
+              \node[main] (2) at (8,6)  {$v_2$};
+              \node[main] (5) at (6,5)  {$v_5$};
+            
+            \draw[line width = 1.8] (1) -- node[midway, above, sloped] {$w_{1,2}$} (2); 
+            \draw[line width = 1.8] (1) -- node[midway, above, sloped] {$w_{1,3}$} (3) ; 
+            \draw[line width = 1.8] (2) -- node[midway, above, sloped] {$w_{2,3}$} (3) ; 
+            \draw[line width = 1.8] (4) -- node[midway, above, sloped] {$w_{4,5}$} (5) ; 
+            \draw[line width = 1.8] (6) -- node[midway, above, sloped] {$w_{6,4}$} (4); 
+            \end{tikzpicture}
+            }
+    \end{figure}
+    
+    \end{columns}
+    The optimal bipartitioning is the one that minimizes $cut$ values.
+\end{frame}
+
+\section{Normalized Min Cut}
+\begin{frame}{Normalized Min Cut \footnote{\footfullcite{RN165}}}
+    \begin{align}
+        Ncut(A,B) & = \frac{cut(A,B)}{assoc(A,V)} + \frac{cut(A,B)}{assoc(B,V)} \\
+        cut(A,B) &= \sum_{u \in A, v \in B} w(u,v)\\
+        assoc(A,V) &= \sum_{u \in A, t\in V} w(u,t)
+    \end{align}
+    
+$cut(A,B)$: Total weight of the edges between two clusters \\
+$assoc(A,V)$: Total connection from nodes in A to all nodes in the graph \\
+$assoc(B,V)$: Total connection from nodes in B to all nodes in the graph \\
+
+\end{frame}
+
+\begin{frame}{Normalized Min Cut - \textit{Optimum Bipartition}}
+    \begin{align}
+        Ncut(A,B) & = \frac{cut(A,B)}{assoc(A,V)} + \frac{cut(A,B)}{assoc(B,V)} \\
+        min_xNcut(x) &= min_y\frac{y^T(D-W)-y}{y^T D y} \\
+        (D-W)y &= \lambda D y
+    \end{align}
+    
+\begin{itemize}
+    %\item $x$ is dimension indicator vector. $x_i = 1$ if node is in group $i$, $x_j$ if node is in group $j$. \\
+    \item $W$ (Adjacency Matrix) is $N \times N$ symmetrical matrix with $W(i,j) = w_{i,j} $.
+    \item $D$ (Degree Matrix) is $N \times N$ diagonal matrix with $d_i = \sum_j w(i,j) $ on its diagonal. \\
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Representing Images with Graph Networks}
+\begin{itemize}
+    \item Assign weights to each edge.
+    \item The weights represent the similarity of two pixels.
+\end{itemize}
+\begin{align}
+w_{ij} = e^{\dfrac{-||F_{(i)} - F_{(j)}||_2^2}{\sigma_I^2}}
+*
+    \begin{cases}
+    e^\dfrac{-||X_{(i)} - X_{(j)}||_2^2}{\sigma_X^2}, &  \text{if } ||X_{(i)} - X_{(j)}||_2 < r\\
+    0,                                               &  \text{otherwise}
+    \end{cases}
+\end{align}
+\\
+  \pause
+  -   $F$ is feature vector based on \textbf{brightness}, color, texture, or motion information. \\
+  \pause
+  -   $r$ is distance between two pixel nodes $i$ and $j$. \\ 
+  -   $w_{ij} = 0$ when $i$ and $j$ are apart more than $r$ \\
+  -   As $\sigma_I$ gets larger, the differences between the weights decrease \\
+\end{frame}
+
+
+\begin{frame}{Norm Min Cut - \textit{Summary}}
+    \begin{enumerate}
+        \item Represent images with graph networks. 
+        \item Solve generalized eigensystem $(D-W)y = \lambda D y $.
+        \item Use the eigenvector with the second smallest eigenvalue. Assign values into two groups by considering a splitting point.
+        \item Check if the current partition should be subdivided by checking stability and $Ncut$ value.
+        \item Recursively repartition the segmented parts if necessary.
+    \end{enumerate}
+\end{frame}
+
+\section{Parameters}
+\begin{frame}{Parameters}
+    \begin{align}
+        w_{ij} = e^{\dfrac{-||F_{(i)} - F_{(j)}||_2^2}{\sigma_I^2}}
+        *
+            \begin{cases}
+            e^\dfrac{-||X_{(i)} - X_{(j)}||_2^2}{\sigma_X^2}, &  \text{if} ||X_{(i)} - X_{(j)}||_2 < r\\
+            0,                                               &  \text{otherwise}
+            \end{cases}
+    \end{align}
+    \begin{itemize}
+        \item Number of cuts can be translated into computational resources spent. More iteration is needed to detect finer segments.
+        \item First cut refers to the most salient segments.
+        \item $\sigma_I$: Let more distinct segments to be grouped together.
+        \item $\sigma_x$: Effect of distance between two pixels on the weight.
+        \item $nCut$ Value: Where to stop segmentation
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Generating Next Stimulus}
+    \begin{align}
+    I_{i+1} = 
+        \begin{cases}
+        I_i + I_i \cdot \delta I, & \text{if } i > 1 \text{ and } i < 6 \\
+        I_{init} + I_{init} \cdot \delta I, & \text{if } i = 1
+    \end{cases}
+    \end{align}    
+
+    \begin{itemize}
+        \item Each trial get a new $\delta I$
+        \item Generate 6 intensity values using $\delta I$ and $I_{init}$
+        \item 
+            \begin{equation}
+                I_{init} = 0.745
+            \end{equation}
+    \end{itemize}
+    
+\end{frame}
+\end{document}

@@ -1,0 +1,577 @@
+@article{RN196,
+   author = {Navon, David},
+   title = {The forest revisited: More on global precedence},
+   journal = {Psychological research},
+   volume = {43},
+   number = {1},
+   pages = {1-32},
+   ISSN = {1430-2772},
+   year = {1981},
+   type = {Journal Article}
+}
+
+@article{RN194,
+   author = {Hughes, Howard C and Nozawa, George and Kitterle, Frederick},
+   title = {Global precedence, spatial frequency channels, and the statistics of natural images},
+   journal = {Journal of cognitive neuroscience},
+   volume = {8},
+   number = {3},
+   pages = {197-230},
+   ISSN = {0898-929X},
+   year = {1996},
+   type = {Journal Article}
+}
+
+@article{RN192,
+   author = {Kimchi, Ruth},
+   title = {Perceptual organization and visual attention},
+   journal = {Progress in Brain Research},
+   volume = {176},
+   pages = {15-33},
+   ISSN = {0079-6123},
+   year = {2009},
+   type = {Journal Article}
+}
+
+
+@article{RN177,
+   author = {Gershman, Samuel J. and Tenenbaum, Joshua B. and Jäkel, Frank},
+   title = {Discovering hierarchical motion structure},
+   journal = {Vision Research},
+   volume = {126},
+   pages = {232-241},
+   abstract = {Scenes filled with moving objects are often hierarchically organized: the motion of a migrating goose is nested within the flight pattern of its flock, the motion of a car is nested within the traffic pattern of other cars on the road, the motion of body parts are nested in the motion of the body. Humans perceive hierarchical structure even in stimuli with two or three moving dots. An influential theory of hierarchical motion perception holds that the visual system performs a “vector analysis” of moving objects, decomposing them into common and relative motions. However, this theory does not specify how to resolve ambiguity when a scene admits more than one vector analysis. We describe a Bayesian theory of vector analysis and show that it can account for classic results from dot motion experiments, as well as new experimental data. Our theory takes a step towards understanding how moving scenes are parsed into objects.},
+   keywords = {Motion perception
+Bayesian inference
+Structure learning},
+   ISSN = {0042-6989},
+   DOI = {https://doi.org/10.1016/j.visres.2015.03.004},
+   url = {https://www.sciencedirect.com/science/article/pii/S0042698915000814},
+   year = {2016},
+   type = {Journal Article}
+}
+
+%% Graph Theory
+@article{RN165,
+   author = {Shi, Jianbo and Malik, Jitendra},
+   title = {Normalized cuts and image segmentation},
+   journal = {IEEE Transactions on pattern analysis and machine intelligence},
+   volume = {22},
+   number = {8},
+   pages = {888-905},
+   ISSN = {0162-8828},
+   year = {2000},
+   type = {Journal Article}
+}
+
+@article{newman2003structure,
+  title={The structure and function of complex networks},
+  author={Newman, Mark EJ},
+  journal={SIAM review},
+  volume={45},
+  number={2},
+  pages={167--256},
+  year={2003},
+  publisher={SIAM}
+}
+
+%%%%%% INTRO %%%%%
+%% Gestalt
+@book{koffka2013principles,
+  title={Principles of Gestalt psychology},
+  author={Koffka, Kurt},
+  year={2013},
+  publisher={Routledge}
+}
+
+@article{RN212,
+   author = {Palmer, Stephen E},
+   title = {Perceptual Organization in Vision},
+   journal = {Stevens' Handbook of Experimental Psychology},
+   year = {2002},
+   type = {Journal Article}
+}
+
+@article{wertheimer1923brief,
+  title={A brief introduction to gestalt, identifying key theories and principles},
+  author={Wertheimer, Max},
+  journal={Psychol Forsch},
+  volume={4},
+  number={1},
+  pages={301--350},
+  year={1923}
+}
+
+
+@article{RN228,
+   author = {Kurylo, Daniel D},
+   title = {Time course of perceptual grouping},
+   journal = {Perception & Psychophysics},
+   volume = {59},
+   number = {1},
+   pages = {142-147},
+   ISSN = {1532-5962},
+   year = {1997},
+   type = {Journal Article}
+}
+
+@article{RN233,
+   author = {Oyama, Tadasu and Yamada, Wataru},
+   title = {Perceptual grouping between successively presented stimuli and its relation to visual simultaneity and masking},
+   journal = {Psychological Research},
+   volume = {40},
+   number = {2},
+   pages = {101-112},
+   ISSN = {0340-0727},
+   year = {1978},
+   type = {Journal Article}
+}
+
+
+
+@article{RN225,
+   author = {Razpurker-Apfeld, Irene and Kimchi, Ruth},
+   title = {The time course of perceptual grouping: The role of segregation and shape formation},
+   journal = {Perception & Psychophysics},
+   volume = {69},
+   pages = {732-743},
+   year = {2007},
+   type = {Journal Article}
+}
+
+
+@article{johansson1973visual,
+  title={Visual perception of biological motion and a model for its analysis},
+  author={Johansson, Gunnar},
+  journal={Perception \& psychophysics},
+  volume={14},
+  pages={201--211},
+  year={1973},
+  publisher={Springer}
+}
+
+
+@article{RN229,
+   author = {Schulz, Melissa F. and Sanocki, Thomas},
+   title = {Time Course of Perceptual Grouping by Color},
+   journal = {Psychological Science},
+   volume = {14},
+   number = {1},
+   pages = {26-30},
+   abstract = {Does perceptual grouping operate early or late in visual processing? One position is that the elements in perceptual layouts are grouped early in vision, by properties of the retinal image, before perceptual constancies have been determined. A second position is that perceptual grouping operates on a postconstancy representation, one that is available only after stereoscopic depth perception, lightness constancy, and amodal completion have occurred. The present experiments indicate that grouping can operate on both a precon-stancy representation and a postconstancy representation. Perceptual grouping was based on retinal color similarity at short exposure durations and based on surface color similarity at long durations. These results permit an integration of the preconstancy and postconstancy positions with regard to grouping by color.},
+   DOI = {10.1111/1467-9280.01414},
+   url = {https://journals.sagepub.com/doi/abs/10.1111/1467-9280.01414},
+   year = {2003},
+   type = {Journal Article}
+}
+
+
+@article{RN207,
+   author = {Montoro, Pedro R. and Luna, Dolores and Ortells, Juan J.},
+   title = {Subliminal Gestalt grouping: Evidence of perceptual grouping by proximity and similarity in absence of conscious perception},
+   journal = {Consciousness and Cognition},
+   volume = {25},
+   pages = {1-8},
+   abstract = {Previous studies making use of indirect processing measures have shown that perceptual grouping can occur outside the focus of attention. However, no previous study has examined the possibility of subliminal processing of perceptual grouping. The present work steps forward in the study of perceptual organization, reporting direct evidence of subliminal processing of Gestalt patterns. In two masked priming experiments, Gestalt patterns grouped by proximity or similarity that induced either a horizontal or vertical global orientation of the stimuli were presented as masked primes and followed by visible targets that could be congruent or incongruent with the orientation of the primes. The results showed a reliable priming effect in the complete absence of prime awareness for both proximity and similarity grouping principles. These findings suggest that a phenomenal report of the Gestalt pattern is not mandatory to observe an effect on the response based on the global properties of Gestalt stimuli.},
+   keywords = {Perceptual grouping
+Visual masking
+Subliminal priming
+Proximity
+Similarity},
+   ISSN = {1053-8100},
+   DOI = {https://doi.org/10.1016/j.concog.2014.01.004},
+   url = {https://www.sciencedirect.com/science/article/pii/S1053810014000051},
+   year = {2014},
+   type = {Journal Article}
+}
+
+
+%% Cognitive Limits
+@article{hertwig2003coglimit,
+  title={More is not always better: The benefits of cognitive limits},
+  author={Hertwig, Ralph and Todd, Peter M},
+  journal={Thinking: Psychological perspectives on reasoning, judgment and decision making},
+  pages={213--231},
+  year={2003},
+  publisher={Wiley Online Library}
+}
+
+@incollection{baddeley1974working,
+  title={Working memory},
+  author={Baddeley, Alan D and Hitch, Graham},
+  booktitle={Psychology of learning and motivation},
+  volume={8},
+  pages={47--89},
+  year={1974},
+  publisher={Elsevier}
+}
+
+@article{phillips1977vismem,
+  title={Components of visual memory},
+  author={Phillips, WA and Christie, DFM},
+  journal={The Quarterly Journal of Experimental Psychology},
+  volume={29},
+  number={1},
+  pages={117--133},
+  year={1977},
+  publisher={Taylor \& Francis}
+}
+
+
+%% Hierarchy
+@article{RN195,
+   author = {Deco, Gustavo and Heinke, Dietmar},
+   title = {Attention and spatial resolution: A theoretical and experimental study of visual search in hierarchical patterns},
+   journal = {Perception},
+   volume = {36},
+   number = {3},
+   pages = {335-354},
+   ISSN = {0301-0066},
+   year = {2007},
+   type = {Journal Article}
+}
+
+@article{RN191,
+   author = {Sabary, Shahar and Devyatko, Dina and Kimchi, Ruth},
+   title = {The role of visual awareness in processing of global structure: Evidence from the perceptual organization of hierarchical patterns},
+   journal = {Cognition},
+   volume = {205},
+   pages = {104442},
+   abstract = {We examined whether the perceptual organization of hierarchical structure, and specifically, the integration of local elements into a global shape, requires visual awareness, using a masked priming paradigm, sandwich masking to render the prime invisible, and two types of primes, many-element hierarchical patterns composed of many relatively small elements (Experiment 1) and few-element hierarchical patterns composed of a few relatively large elements (Experiment 2). A significant response priming of the local elements of many-element patterns was observed for invisible primes, whereas a significant response priming of the global shape was found only for the visible primes. For the few-element patterns, only significant response priming of the local elements was observed, as expected, for both visible and invisible primes. Our results suggest that local elements are represented in the absence of visual awareness, regardless of their number and relative size. Visual awareness, however, can be essential for grouping local elements into a global shape. The critical role of awareness in deriving global structure implies that global perception, which characterizes much of our early perception of objects and scenes, is likely to depend on visual awareness.},
+   keywords = {Visual awareness
+Hierarchical structure
+Perceptual organization
+Global and local perception},
+   ISSN = {0010-0277},
+   DOI = {https://doi.org/10.1016/j.cognition.2020.104442},
+   url = {https://www.sciencedirect.com/science/article/pii/S0010027720302614},
+   year = {2020},
+   type = {Journal Article}
+}
+
+
+
+@article{RN196,
+   author = {Navon, David},
+   title = {The forest revisited: More on global precedence},
+   journal = {Psychological research},
+   volume = {43},
+   number = {1},
+   pages = {1-32},
+   ISSN = {1430-2772},
+   year = {1981},
+   type = {Journal Article}
+}
+
+@article{RN231,
+   author = {Navon, David},
+   title = {Forest before trees: The precedence of global features in visual perception},
+   journal = {Cognitive psychology},
+   volume = {9},
+   number = {3},
+   pages = {353-383},
+   ISSN = {0010-0285},
+   year = {1977},
+   type = {Journal Article}
+}
+
+@article{stroop1935studies,
+  title={Studies of interference in serial verbal reactions.},
+  author={Stroop, J Ridley},
+  journal={Journal of experimental psychology},
+  volume={18},
+  number={6},
+  pages={643},
+  year={1935},
+  publisher={Psychological Review Company}
+}
+
+
+@article{RN232,
+   author = {Hughes, Howard C and Layton, W Michael and Baird, John C and Lester, Laurie S},
+   title = {Global precedence in visual pattern recognition},
+   journal = {Perception & psychophysics},
+   volume = {35},
+   pages = {361-371},
+   ISSN = {0031-5117},
+   year = {1984},
+   type = {Journal Article}
+}
+
+
+@article{RN234,
+   author = {Rock, Irvin and Nijhawan, Romi and Palmer, Stephen and Tudor, Leslie},
+   title = {Grouping based on phenomenal similarity of achromatic color},
+   journal = {Perception},
+   volume = {21},
+   number = {6},
+   pages = {779-789},
+   ISSN = {0301-0066},
+   year = {1992},
+   type = {Journal Article}
+}
+
+@misc{hafri_green_firestone_2023,
+ title={Compositionality in visual perception},
+ url={psyarxiv.com/trg7q},
+ DOI={10.31234/osf.io/trg7q},
+ publisher={PsyArXiv},
+ author={Hafri, Alon and Green, E. J and Firestone, Chaz},
+ year={2023},
+ month={Mar}
+}
+
+%%%% Temporal properties
+@article{RN235,
+   author = {Rauschenberger, Robert and Yantis, Steven},
+   title = {Masking unveils pre-amodal completion representation in visual search},
+   journal = {Nature},
+   volume = {410},
+   number = {6826},
+   pages = {369-372},
+   ISSN = {0028-0836},
+   year = {2001},
+   type = {Journal Article}
+}
+
+
+@article{luna1995selective,
+  title={Selective attention to global and local information: Effects of visual angle, exposure duration, and eccentricity on processing dominance},
+  author={Luna, Dolores and Marcos-Ruiz, R and Merino, Jos{\'e} M},
+  journal={Visual Cognition},
+  volume={2},
+  number={2-3},
+  pages={183--200},
+  year={1995},
+  publisher={Taylor \& Francis}
+}
+
+@article{luna1993effects,
+  title={Effects of exposure duration and eccentricity of global and local information on processing dominance},
+  author={Luna, Dolores},
+  journal={European Journal of Cognitive Psychology},
+  volume={5},
+  number={2},
+  pages={183--200},
+  year={1993},
+  publisher={Taylor \& Francis}
+}
+%%%%%% METHODS %%%%%
+%%%% Psychtoolbox, QUEST, and R
+@article{watson1983quest,
+  title={QUEST: A Bayesian adaptive psychometric method},
+  author={Watson, Andrew B and Pelli, Denis G},
+  journal={Perception \& psychophysics},
+  volume={33},
+  number={2},
+  pages={113--120},
+  year={1983},
+  publisher={Springer}
+}
+
+@article{psychtoolbox,
+  title={The psychophysics toolbox},
+  author={Brainard, David H and Vision, Spatial},
+  journal={Spatial vision},
+  volume={10},
+  number={4},
+  pages={433--436},
+  year={1997},
+  publisher={Citeseer}
+}
+
+@article{schutt2015psignifit,
+  title={Psignifit 4: Pain-free Bayesian inference for psychometric functions},
+  author={Sch{\"u}tt, Heiko and Harmeling, Stefan and Macke, Jakob and Wichmann, Felix},
+  journal={Journal of vision},
+  volume={15},
+  number={12},
+  pages={474--474},
+  year={2015},
+  publisher={The Association for Research in Vision and Ophthalmology}
+}
+
+@Manual{R,
+    title = {R: A Language and Environment for Statistical Computing},
+    author = {{R Core Team}},
+    organization = {R Foundation for Statistical Computing},
+    address = {Vienna, Austria},
+    year = {2018},
+    url = {https://www.R-project.org/},
+  }
+
+%%%% Contrast sensitivies
+
+@article{buhren2006measuring,
+  title={Measuring contrast sensitivity under different lighting conditions: comparison of three tests},
+  author={B{\"u}hren, Jens and Terzi, Evdoxia and Bach, Michael and Wesemann, Wolfgang and Kohnen, Thomas},
+  journal={Optometry and Vision Science},
+  volume={83},
+  number={5},
+  pages={290--298},
+  year={2006},
+  publisher={LWW}
+}
+
+@article{lesmes2010bayesian,
+  title={Bayesian adaptive estimation of the contrast sensitivity function: the quick CSF method},
+  author={Lesmes, Luis Andres and Lu, Zhong-Lin and Baek, Jongsoo and Albright, Thomas D},
+  journal={Journal of vision},
+  volume={10},
+  number={3},
+  pages={17--17},
+  year={2010},
+  publisher={The Association for Research in Vision and Ophthalmology}
+}
+
+@article{koefoed2015contrast,
+  title={Contrast sensitivity measured by two different test methods in healthy, young adults with normal visual acuity},
+  author={Koefoed, Vilhelm F and Baste, Valborg and Roumes, Corinne and H{\o}vding, Gunnar},
+  journal={Acta ophthalmologica},
+  volume={93},
+  number={2},
+  pages={154--161},
+  year={2015},
+  publisher={Wiley Online Library}
+}
+
+
+@inbook{pelli_psychophysics,
+title = "Psychophysical methods",
+author = "Denis Pelli and B Farell",
+year = "2010",
+language = "English (US)",
+volume = "III",
+pages = "3.1--3.12",
+editor = "M Bass and C DeCusatis and J Enoch and V Lakshminarayanan and G Li and C MacDonald and V Mahajan and EV Stryland",
+booktitle = "Handbook of optics",
+publisher = "McGraw-Hill",
+edition = "3rd",
+}
+
+
+%%%% Contrast sensitivies - RT
+@article{jaskowski2006task,
+  title={Task modulation of the effects of brightness on reaction time and response force},
+  author={Ja{\'s}kowski, Piotr and W{\l}odarczyk, Dariusz},
+  journal={International Journal of Psychophysiology},
+  volume={61},
+  number={2},
+  pages={98--112},
+  year={2006},
+  publisher={Elsevier}
+}
+
+@article{grice1979variable,
+  title={Variable criterion analysis of brightness effects in simple reaction time.},
+  author={Grice, G Robert and Nullmeyer, Robert and Schnizlein, John M},
+  journal={Journal of Experimental Psychology: Human Perception and Performance},
+  volume={5},
+  number={2},
+  pages={303},
+  year={1979},
+  publisher={American Psychological Association}
+}
+
+@article{dehghan2017evaluation,
+  title={Evaluation of Effects of Different Levels of Brightness on Attention and Reaction Time under Laboratory Conditions},
+  author={Dehghan, Habibollah and Mohebian, Zohre and Yadegarfar, Ghasem},
+  journal={Iranian Journal of Ergonomics},
+  volume={4},
+  number={4},
+  pages={48--56},
+  year={2017},
+  publisher={Iranian Journal of Ergonomics}
+}
+
+
+%%%%% Voronoi Diagrams
+
+@article{aurenhammer1991voronoi,
+  title={Voronoi diagrams—a survey of a fundamental geometric data structure},
+  author={Aurenhammer, Franz},
+  journal={ACM Computing Surveys (CSUR)},
+  volume={23},
+  number={3},
+  pages={345--405},
+  year={1991},
+  publisher={ACM New York, NY, USA}
+}
+
+
+%%%%% Predictors
+@article{peterson1994object,
+  title={Object recognition contributions to figure-ground organization: Operations on outlines and subjective contours},
+  author={Peterson, Mary A and Gibson, Bradley S},
+  journal={Perception \& Psychophysics},
+  volume={56},
+  number={5},
+  pages={551--564},
+  year={1994},
+  publisher={Springer}
+}
+
+@article{nothdurft1991texture,
+  title={Texture segmentation and pop-out from orientation contrast},
+  author={Nothdurft, HC},
+  journal={Vision research},
+  volume={31},
+  number={6},
+  pages={1073--1078},
+  year={1991},
+  publisher={Elsevier}
+}
+
+
+%%% Parafoveal processing
+@article{rayner1998eye,
+  title={Eye movements in reading and information processing: 20 years of research.},
+  author={Rayner, Keith},
+  journal={Psychological bulletin},
+  volume={124},
+  number={3},
+  pages={372},
+  year={1998},
+  publisher={American Psychological Association}
+}
+
+@article{henderson1987effects,
+  title={Effects of foveal priming and extrafoveal preview on object identification.},
+  author={Henderson, John M and Pollatsek, Alexander and Rayner, Keith},
+  journal={Journal of Experimental Psychology: Human Perception and Performance},
+  volume={13},
+  number={3},
+  pages={449},
+  year={1987},
+  publisher={American Psychological Association}
+}
+
+%%%% Time course of fixation
+@article{unema2005time,
+  title={Time course of information processing during scene perception: The relationship between saccade amplitude and fixation duration},
+  author={Unema, Pieter JA and Pannasch, Sebastian and Joos, Markus and Velichkovsky, Boris M},
+  journal={Visual cognition},
+  volume={12},
+  number={3},
+  pages={473--494},
+  year={2005},
+  publisher={Taylor \& Francis}
+}
+
+
+%%%%% DISCUSSION %%%%%
+@article{RN236,
+   author = {Bouhassoun, Sabrina and Poirel, Nicolas and Hamlin, Noah and Doucet, Gaelle E.},
+   title = {The forest, the trees, and the leaves across adulthood: Age-related changes on a visual search task containing three-level hierarchical stimuli},
+   journal = {Attention, Perception, & Psychophysics},
+   volume = {84},
+   number = {3},
+   pages = {1004-1015},
+   abstract = {Selecting relevant visual information in complex scenes by processing either global information or local parts helps us act efficiently within our environment and achieve goals. A global advantage (faster global than local processing) and global interference (global processing interferes with local processing) comprise an evidentiary global precedence phenomenon in early adulthood. However, the impact of healthy aging on this phenomenon remains unclear. As such, we collected behavioral data during a visual search task, including three-levels hierarchical stimuli (i.e., global, intermediate, and local levels) with several hierarchical distractors, in 50 healthy adults (26 younger (mean age: 26 years) and 24 older (mean age: 62 years)). Results revealed that processing information presented at the global and intermediate levels was independent of age. Conversely, older adults were slower for local processing compared to the younger adults, suggesting lower efficiency to deal with visual distractors during detail-oriented visual search. Although healthy older adults continued exhibiting a global precedence phenomenon, they were disproportionately less efficient during local aspects of information processing, especially when multiple visual information was displayed. Our results could have important implications for many life situations by suggesting that visual information processing is impacted by healthy aging, even with similar visual stimuli objectively presented.},
+   ISSN = {1943-393X},
+   DOI = {10.3758/s13414-021-02438-3},
+   url = {https://doi.org/10.3758/s13414-021-02438-3},
+   year = {2022},
+   type = {Journal Article}
+}
+

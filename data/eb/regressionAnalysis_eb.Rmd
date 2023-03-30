@@ -1,0 +1,424 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+#plyr can be used to manipulate data frames
+library(plyr)
+library(dplyr)
+#ggplot is good for plotting
+library(ggplot2)
+#lmerTest loads mixed effects regressions and according t/z-tests
+library(lmerTest)
+library(caret)
+library(ROCR)
+library(pscl)
+```
+
+Load Data. Leaf only, with contrast levels determined using sensitivity experiment
+
+```{r}
+setwd('/Users/mehmetyoruten/Library/CloudStorage/OneDrive-bwedu/Documents/School/Master/CPI Lab/Thesis/Experiment/behavioral analyses/data/eb/')
+
+participantID = 'eb'
+
+# Choose your data set
+df <- read.csv("eb.csv", header = TRUE)
+df <- df[,-1]
+cont_df <- df[df$control == 1,]
+df <- df[df$control == 0,]
+
+# Scale cut no
+#df <- df %>% mutate_at(c('cutNo'), ~(scale(.) %>% as.vector))
+#cont_df <- cont_df %>% mutate_at(c('cutNo'), ~(scale(.) %>% as.vector))
+
+# Converting into factor variables
+df$blockNo<-as.factor(df$blockNo)
+#df$cutNo<-as.factor(df$cutNo)
+df$expTime<-as.factor(df$expTime)
+df$control<-as.factor(df$control)
+df$leaf<-as.factor(df$leaf)
+df$keyCode<-as.factor(df$keyCode)
+
+
+head(cont_df, 10)
+```
+#Regression on Test
+Check for the effect of Cut Number and Exposure Time on accuracy
+
+```{r}
+m0 <- glm(correct ~ 1, data = df, family = "binomial")
+m1 <- glm(correct ~ cutNo, data = df, family = "binomial")
+m2 <- glm(correct ~ cutNo + expTime,  data = df, family = "binomial")
+m3 <- glm(correct ~ cutNo*expTime , data = df, family = "binomial")
+m4 <- glm(correct ~ intOrder*expTime + cutNo , data = df, family = "binomial")
+
+anova(m0,m1,m2,m3,m4, test = "Chisq")
+```
+
+```{r}
+summary(m4)
+```
+
+```{r}
+m4 <- glm(correct ~ meanSegInt, data = df, family = "binomial")
+sum_msi <- summary(m4)
+coeff_oths2 <- data.frame(coefs = (sum_msi$coefficients[2,1]), std = (sum_msi$coefficients[2,2]))
+  
+m5 <- glm(correct ~ segSize, data = df, family = "binomial")
+sum_size <- summary(m5)
+coeff_oths2 <- rbind(coeff_oths2, sum_size$coefficients[2,1:2])
+
+m6 <- glm(correct ~ segCentDist , data = df, family = "binomial")
+sum_dist <- summary(m6)
+coeff_oths2 <- rbind(coeff_oths2, sum_dist$coefficients[2,1:2])
+
+m7 <- glm(correct ~ deltaInt , data = df, family = "binomial")
+sum_deltaInt <- summary(m7)
+coeff_oths2 <- rbind(coeff_oths2, sum_deltaInt$coefficients[2,1:2])
+
+
+rownames(coeff_oths2) <- c('Avrg Seg. Intensity','Seg. Size','Seg. Distance','Seg. Intens. Diff.')
+coeff_oths2$lb <- coeff_oths2$coefs - (coeff_oths2$std*1.96)
+coeff_oths2$ub <- coeff_oths2$coefs + (coeff_oths2$std*1.96)
+
+
+m8 <- glm(correct ~ cutNo*expTime + segSize + segCentDist + intDiff, data = df, family = "binomial")
+sum_all_oths <- summary(m8)
+coeff_oths <- data.frame(coefs = (sum_all_oths$coefficients[,1]), std = (sum_all_oths$coefficients[,2]))
+coeff_oths$lb <- coeff_oths$coefs - (coeff_oths$std*1.96)
+coeff_oths$ub <- coeff_oths$coefs + (coeff_oths$std*1.96)
+
+anova(m4,m5,m6,m7,m8, test="Chisq")
+
+
+
+```
+
+```{r}
+summary(m8)
+```
+
+```{r}
+df %>%
+  dplyr::select(segSize, segCentDist, intDiff, segNcut, meanSegInt, deltaInt, intOrder) %>%
+  ggpairs()
+```
+
+
+```{r}
+rownames(coeff_oths) <- c('Intercept','Cut No.', 'Exp. Time Long', 'Seg. Size','Seg. Distance','Seg. Intens. Diff.','CutNo:ExpTime')
+level_order <- c('Intercept','Cut No.', 'Exp. Time Long', 'CutNo:ExpTime', 'Seg. Size','Seg. Distance','Seg. Intens. Diff.')
+level_order <- rownames(coeff_oths) 
+
+mainEffect <- c('Intercept','Cut No.', 'Exp. Time Long', 'CutNo:ExpTime')
+otherEffect <-c('Seg. Size','Seg. Distance','Seg. Intens. Diff.')
+  
+ggplot(coeff_oths, aes(x=factor(row.names(coeff_oths), levels = level_order),coefs)) + 
+      geom_errorbar(aes(ymin=lb,ymax=ub),width=0.2) +
+      geom_point(size=1) + 
+      theme_bw() +
+      ylab(""~beta~" -Coefficients with 95%CI") +
+      xlab("Predictors") + 
+      theme_classic() + 
+      theme(axis.title.y = element_text(size = 18), axis.text=element_text(size = 16), axis.title.x=element_blank(), axis.text.x = element_text(angle = 45, hjust = 1)) +
+      geom_hline(yintercept = 0, linetype = "dashed")
+
+#filename = paste('figs/', participantID, '/', participantID, '_test_all_coefficients.png', sep = "")
+#ggsave(filename = filename, width = 10, height = 5, device='png', dpi=300)
+
+```
+
+
+# Regressions on Control
+
+Create coefficients data frame for plotting interactions
+
+```{r}
+cm4 <- glm(correct ~ meanSegInt, data = cont_df, family = "binomial")
+sum_msi <- summary(cm4)
+coeff_oths_my <- data.frame(coefs = (sum_msi$coefficients[2,1]), std = (sum_msi$coefficients[2,2]))
+  
+cm5 <- glm(correct ~ segSize, data = cont_df, family = "binomial")
+sum_size <- summary(cm5)
+coeff_oths_my <- rbind(coeff_oths_my, sum_size$coefficients[2,1:2])
+
+cm6 <- glm(correct ~ segCentDist , data = cont_df, family = "binomial")
+sum_dist <- summary(cm6)
+coeff_oths_my <- rbind(coeff_oths_my, sum_dist$coefficients[2,1:2])
+
+cm7 <- glm(correct ~ deltaInt , data = cont_df, family = "binomial")
+sum_deltaInt <- summary(cm7)
+coeff_oths_my <- rbind(coeff_oths_my, sum_deltaInt$coefficients[2,1:2])
+
+
+rownames(coeff_oths_my) <- c('Avrg Seg. Intensity','Seg. Size','Seg. Distance','Seg. Intens. Diff.')
+coeff_oths_my$lb <- coeff_oths_my$coefs - (coeff_oths_my$std*1.96)
+coeff_oths_my$ub <- coeff_oths_my$coefs + (coeff_oths_my$std*1.96)
+
+
+cm8 <- glm(correct ~ cutNo*expTime + segSize + segCentDist + intDiff , data = cont_df, family = "binomial")
+sum_all_oths <- summary(cm8)
+coeff_oths_sw_all <- data.frame(coefs = (sum_all_oths$coefficients[,1]), std = (sum_all_oths$coefficients[,2]))
+coeff_oths_sw_all$lb <- coeff_oths_sw_all$coefs - (coeff_oths_sw_all$std*1.96)
+coeff_oths_sw_all$ub <- coeff_oths_sw_all$coefs + (coeff_oths_sw_all$std*1.96)
+
+anova(cm4,cm5,cm6,cm7,cm8, test="Chisq")
+```
+```{r}
+summary(cm8)
+```
+
+
+```{r}
+#coeff_oths_sw_all <- coeff_oths_my_all[2:5,]
+
+#rownames(coeff_oths_sw_all) <- c('Intercept','Cut No.', 'Exp. Time Long','Avrg Seg. Intensity', 'Seg. Size','Seg. Distance','Seg. Intens. Diff.' )
+rownames(coeff_oths_sw_all) <- c('Intercept','Cut No.', 'Exp. Time Long', 'Seg. Size','Seg. Distance','Seg. Intens. Diff.','CutNo:ExpTime')
+level_order <- c('Intercept','Cut No.', 'Exp. Time Long', 'CutNo:ExpTime', 'Seg. Size','Seg. Distance','Seg. Intens. Diff.')
+level_order <- rownames(coeff_oths) 
+
+ggplot(coeff_oths_sw_all, aes(x=factor(row.names(coeff_oths_sw_all), levels = level_order),coefs)) + 
+      geom_errorbar(aes(ymin=lb,ymax=ub),width=0.2) +
+      geom_point(size=1) + 
+      theme_bw() +
+      ylab(""~beta~" -Coefficients with 95%CI") +
+      xlab("Predictors") + 
+      theme_classic() + 
+      theme(axis.title.y = element_text(size = 18), axis.text=element_text(size = 16), axis.title.x=element_blank(), axis.text.x = element_text(angle = 45, hjust = 1)) +
+      geom_hline(yintercept = 0, linetype = "dashed")
+  
+filename = paste('figs/', participantID, '/', participantID, '_control_all_coefficients.png', sep = "")
+ggsave(filename = filename, width = 10, height = 5, device='png', dpi=300)
+```
+
+
+```{r}
+m0 <- glm(correct ~ 1, data = cont_df, family = "binomial")
+m1 <- glm(correct ~ cutNo, data = cont_df, family = "binomial")
+m2 <- glm(correct ~ cutNo + expTime,  data = cont_df, family = "binomial")
+m3 <- glm(correct ~ cutNo*expTime , data = cont_df, family = "binomial")
+m4 <- glm(correct ~ intOrder*expTime + cutNo , data = cont_df, family = "binomial")
+m5 <- glm(correct ~ cutNo*expTime + cutNo + avgCrossCorr, data = cont_df, family = "binomial")
+
+
+anova(m1,m2,m3,m4,m5, test="Chisq")
+```
+
+```{r}
+summary(m4)
+print(pscl::pR2(m4)["McFadden"])
+print(caret::varImp(m4))
+```
+
+# CONTROL - Predict 
+```{r}
+#use 70% of dataset as training set and 30% as test set
+sample <- sample(c(TRUE, FALSE), nrow(cont_df), replace=TRUE, prob=c(0.7,0.3))
+train  <- cont_df[sample, ]
+test   <- cont_df[!sample, ]
+
+trained_model <- glm(correct ~ cutNo*expTime + intOrder + avgCrossCorr, data = train, family = "binomial")
+# get probabilities of getting correct answers
+pHat <- predict(trained_model, test ,type = 'response', interval = 'confidence')
+
+
+jitter = position_jitter(width = 0, height = 0.085)
+
+ggplot(test) +
+  geom_point(aes(x=cutNo, y = pHat)) +
+  geom_point(aes(x=cutNo, y = correct, color=factor(correct)), position = jitter)
+```
+Sensitivity (True Positive Rate)
+Specificity (True Negative Rate)
+
+```{r}
+test_correct <- as.factor(test$correct)
+cutOffAll <- seq(0.5, 0.95, by=0.01)
+sensArray <- c(0)
+specArray <- c(0)
+
+for (i in 1:length(cutOffAll))
+  {
+  cutOff <- cutOffAll[i]
+  predicted <- ifelse(pHat > cutOff, 1, 0)
+  predicted <- as.factor(predicted)
+  sens = sensitivity(test_correct, predicted)
+  spec = specificity(test_correct, predicted)
+  sensArray[i] = sens
+  specArray[i] = spec
+}
+
+optCOid = which.min(specArray - sensArray)
+optCutOff = cutOffAll[optCOid]
+sens_spec <- data.frame(cutOffAll,sensArray, specArray)
+
+
+ggplot(data = sens_spec) + 
+  geom_line(aes(x=cutOffAll, y = sensArray)) + 
+  geom_line(aes(x=cutOffAll, y = specArray), color = 'red') +
+  scale_y_continuous(sec.axis = sec_axis(~., name = "Specificity")) +
+  theme_bw() +
+  ylab("Sensitivity") +
+  xlab("Cut Off") + 
+  theme_classic() +
+  theme(axis.title.y.right = element_text(colour = "red"), legend.position="none") +
+  geom_vline(xintercept = optCutOff, linetype = "dashed")
+```
+
+```{r}
+predicted <- ifelse(pHat > optCutOff, 1, 0)
+predicted <- as.factor(predicted)
+confMat <- confusionMatrix(predicted,test_correct)
+accuracy <- (confMat$table[1]+confMat$table[4]) / sum(confMat$table)
+print(confMat)
+```
+
+
+
+# Predict - Test Trials
+Marcel's suggestion on re building the model
+```{r}
+require(ROCR)
+#use 70% of dataset as training set and 30% as test set
+sample <- sample(c(TRUE, FALSE), nrow(df), replace=TRUE, prob=c(0.8,0.2))
+train  <- df[sample, ]
+test   <- df[!sample, ]
+
+trained_model <- glm(correct ~ cutNo*expTime, data = df, family = "binomial")
+#trained_model <- glm(correct ~ cutNo*expTime + intOrder + avgCrossCorr, data = train, family = "binomial")
+# get probabilities of getting correct answers
+pHat <- predict(trained_model, type = 'response', interval = 'confidence')
+df["pHat"] <- pHat
+
+correct_prediction = prediction(pHat, df$correct)
+correct_performance = performance(correct_prediction,
+                                     measure = "tpr", # true positive rate
+                                     x.measure = "fpr") # false positive rate
+jitter = position_jitter(width = 0, height = 0.035)
+
+ggplot(df) +
+  geom_point(aes(x=cutNo, y = pHat, color = factor(expCond)), alpha = 0.2) +
+  geom_line(aes(x=cutNo, y = pHat, color = factor(expCond))) + 
+  theme_bw() +
+  ylab("Accuracy") +
+  xlab("Cuit No") + 
+  theme_classic() + 
+  geom_hline(yintercept = 0.5, linetype = "dashed")
+  ylim(0,1)
+```
+
+
+```{r}
+df_grpd = df %>% group_by(cutNo, expTime) %>%
+                summarise(acc = mean(correct), 
+                          sd = sd(correct),
+                          sem = sd(correct)/sqrt(length(correct)),
+                          .groups = 'drop')
+
+jitter = position_jitter(width = 0, height = 0.01)
+
+ggplot(data = df_grpd, aes(x=cutNo, y = acc, color = expTime)) +
+  geom_line() + 
+  geom_errorbar(aes(ymin=acc-sem,ymax=acc+sem),width=0.1) + 
+  geom_point(data =df, aes(x=cutNo, y = pHat, color = expTime)) + 
+  theme_bw() +
+  ylab("Accuracy") +
+  xlab("Cuit No") + 
+  theme_classic() + 
+  geom_hline(yintercept = 0.5, linetype = "dashed")
+```
+
+```{r}
+ggplot(df_grpd) +
+  geom_point(aes(x=cutNo, y = pHat, color = factor(expCond)), position = jitter, alpha = 0.2) +
+  geom_line(dataaes(x=cutNo, y = pHat, color = factor(expCond)), position = jitter, alpha = 0.2) +
+  #geom_point(aes(x=cutNo, y = correct, color=factor(correct)), position = jitter) +
+  ylim(0,1)
+```
+
+Illustrate Receiver Operating Characteristics
+Model comparison using AUC
+```{r}
+plot(correct_performance, colorize = TRUE) #colors correspond to cutoffs
+performance(correct_prediction, "auc")@y.values
+```
+```{r}
+require(ROCR)
+#use 70% of dataset as training set and 30% as test set
+sample <- sample(c(TRUE, FALSE), nrow(df), replace=TRUE, prob=c(0.8,0.2))
+train  <- df[sample, ]
+test   <- df[!sample, ]
+
+trained_model <- glm(correct ~ cutNo*expTime + intOrder + segSize, data = train, family = "binomial")
+#trained_model <- glm(correct ~ cutNo*expTime + intOrder + avgCrossCorr, data = train, family = "binomial")
+# get probabilities of getting correct answers
+pHat <- predict(trained_model, test ,type = 'response', interval = 'confidence')
+#pHat <- predict(trained_model ,type = 'response', interval = 'confidence')
+
+correct_prediction = prediction(pHat, test$correct)
+correct_performance = performance(correct_prediction,
+                                     measure = "tpr", # true positive rate
+                                     x.measure = "fpr") # false positive rate
+jitter = position_jitter(width = 0, height = 0.035)
+
+ggplot(test) +
+  geom_point(aes(x=cutNo, y = pHat, color = factor(correct)), position = jitter, alpha = 0.2) +
+  #geom_point(aes(x=cutNo, y = correct, color=factor(correct)), position = jitter) +
+  ylim(0,1)
+```
+
+```{r}
+plot(correct_performance, colorize = TRUE) #colors correspond to cutoffs
+performance(correct_prediction, "auc")@y.values
+```
+
+Sensitivity (True Positive Rate)
+Specificity (True Negative Rate)
+
+```{r}
+test_correct <- as.factor(test$correct)
+cutOffAll <- seq(0.5, 0.95, by=0.01)
+sensArray <- c(0)
+specArray <- c(0)
+
+for (i in 1:length(cutOffAll))
+  {
+  cutOff <- cutOffAll[i]
+  predicted <- ifelse(pHat > cutOff, 1, 0)
+  predicted <- as.factor(predicted)
+  sens = sensitivity(test_correct, predicted)
+  spec = specificity(test_correct, predicted)
+  sensArray[i] = sens
+  specArray[i] = spec
+}
+
+optCOid = which.min(specArray - sensArray)
+optCutOff = cutOffAll[optCOid]
+sens_spec <- data.frame(cutOffAll,sensArray, specArray)
+
+
+ggplot(data = sens_spec) + 
+  geom_line(aes(x=cutOffAll, y = sensArray)) + 
+  geom_line(aes(x=cutOffAll, y = specArray), color = 'red') +
+  scale_y_continuous(sec.axis = sec_axis(~., name = "Specificity")) +
+  theme_bw() +
+  ylab("Sensitivity") +
+  xlab("Cut Off") + 
+  theme_classic() +
+  theme(axis.title.y.right = element_text(colour = "red"), legend.position="none") +
+  geom_vline(xintercept = optCutOff, linetype = "dashed")
+```
+
+```{r}
+predicted <- ifelse(pHat > optCutOff, 1, 0)
+predicted <- as.factor(predicted)
+confMat <- confusionMatrix(predicted,test_correct)
+accuracy <- (confMat$table[1]+confMat$table[4]) / sum(confMat$table)
+print(confMat)
+```
+
+```{r}
+
+```
+

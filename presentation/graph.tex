@@ -1,0 +1,120 @@
+\documentclass[10pt,xcolor=svgnames]{beamer} %Beamer
+\usepackage{palatino} %font type
+\usepackage{tikz}
+\usetikzlibrary{calc}
+%\usepackage[style=verbose,backend=biber]{biblatex}
+\usepackage[style=authoryear]{biblatex}
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+\usefonttheme{metropolis} %Type of slides
+\usefonttheme[onlymath]{serif} %font type Mathematical expressions
+\usetheme[progressbar=frametitle]{metropolis} %This adds a bar at the beginning of each section.
+
+\usepackage{appendixnumberbeamer} %enumerate each slide without counting the appendix
+\setbeamercolor{progress bar}{fg=Orange!70!Coral} %These are the colours of the progress bar. Notice that the names used are the svgnames
+\setbeamercolor{title separator}{fg=DarkSalmon} %This is the line colour in the title slide
+\setbeamercolor{structure}{fg=black} %Colour of the text of structure, numbers, items, blah. Not the big text.
+\setbeamercolor{normal text}{fg=black!87} %Colour of normal text
+\setbeamercolor{alerted text}{fg=DarkRed!60!Gainsboro} %Color of the alert box
+\setbeamercolor{example text}{fg=Maroon!70!Coral} %Colour of the Example block text
+
+
+\definecolor{backgroundExp}{RGB}{127.5,127.5, 127.5} %These are the colours of the background. Being this the main combination and so one. 
+\setbeamercolor{palette primary}{bg = backgroundExp, fg=white}
+\setbeamercolor{palette secondary}{bg=NavyBlue!50!DarkOliveGreen, fg=white}
+\setbeamercolor{palette tertiary}{bg=NavyBlue!40!Black, fg= white}
+\setbeamercolor{section in toc}{fg=NavyBlue!40!Black} %Color of the text in the table of contents (toc)
+
+%These next packages are the useful for Physics in general, you can add the extras here. 
+\usepackage{amsmath,amssymb}
+\usepackage{slashed}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+\usepackage{geometry}
+\usepackage{xspace}
+
+
+\definecolor{mpigreen}{HTML}{007977}
+\setbeamercolor{frametitle}{bg=mpigreen}
+
+\definecolor{experimentBackground}{RGB}{127.5,127.5,127.5}
+
+\newcommand{\themename}{\textbf{\textsc{bluetemp}\xspace}}%metropolis}}\xspace}
+\titlegraphic{%
+  \begin{picture}(0,0)
+    \put(315,-200){\makebox(0,0)[rt]{\includegraphics[width=1cm]{logos/logoCPI.jpeg}}}
+  \end{picture}
+  \begin{picture}(0,0)
+    \put(280,-200){\makebox(0,0)[rt]{\includegraphics[width=4cm]{logos/logoMPI.png}}}
+  \end{picture}
+  \begin{picture}(0,0)
+    \put(80,-200){\makebox(0,0)[rt]{\includegraphics[width=3cm]{logos/logoUNI.png}}}
+  \end{picture}
+  }
+  
+
+\title{Characterizing Temporal Dynamics of Visual Perceptual Grouping}
+\author[Name]{Mehmet Yörüten \\
+            \textbf{Supervised by: } Shuchen Wu, Felix Wichmann, Eric Schulz \\ } %With inst, you can change the institution they belong
+\institute[uni]{\textit{M.Sc Student of Neural Information Processing} \\ University of Tübingen}
+\date{} 
+
+%References file
+
+\begin{document}
+
+\maketitle
+\metroset{titleformat frame=smallcaps} %This changes the titles for small caps
+
+\begin{frame}{Getting Segments - \textit{Normalized Min Cut}}
+\begin{figure}
+    \hspace*{-1em}
+    \vspace*{-1em}
+    \begin{tikzpicture}
+      [
+        grow                    = right,
+        sibling distance        = 14em,
+        level distance          = 17em,
+        edge from parent/.style = {draw, -latex},
+        every node/.style       = {font=\footnotesize},
+        scale = 0.46,
+        sloped
+      ]
+      \node(0) {\includegraphics[width=0.2\textwidth]{pictures/grid_init4.png}}
+            child {node (seg1) {\includegraphics[width=0.2\textwidth]{pictures/seg_2_cut1.png}}
+                }
+            child {node (seg2) {\includegraphics[width=0.2\textwidth]{pictures/seg_3_cut1.png}}
+                child {node (segLastBottom) {\includegraphics[width=0.2\textwidth]{pictures/seg_4_cut2.png}}}
+                child {node (segLastTop) {\includegraphics[width=0.2\textwidth]{pictures/seg_5_cut2.png}}
+                    child {node (seg7) {\includegraphics[width=0.2\textwidth]{pictures/seg_7_cut3.png}}}
+                    child {node (seg6) {\includegraphics[width=0.2\textwidth]{pictures/seg_6_cut3.png}}}
+                }
+                };
+        \node (Cut1) [above of=seg2, yshift=0.7cm] {Cut 1};
+        \node (Cut2) [above of=segLastTop, yshift=0.5cm] {Cut 2};
+        \node (Cut3) [above of=seg6, yshift=0.5cm] {Cut 3};
+
+        
+        \draw[dotted, ultra thick, transform canvas={xshift=+3.8em}] ($(Cut1)$) -- ($(seg1)$) node (expS) {Short Exposure Time}; 
+        \draw[dotted, ultra thick, transform canvas={xshift=+3.8em}] ($(Cut3)$)++(0,+30pt) -- ($(seg7)$) node (expL) {Long Exposure Time} ; 
+        
+        
+        %\draw[dashed,rounded corners=2, red]($(Cut1)+(-2.95,+0.95)$)rectangle($(seg1)+(3,-2.3)$); % Draw rectangles from northwest to southeast
+        %\draw[dashed,rounded corners=2, blue]($(Cut1)+(-2.95,+0.95)$)rectangle($(seg7)+(3,-2.3)$); % Draw rectangles from northwest to southeast
+        %\draw[dotted, ultra thick, transform canvas={xshift=+3.8em}] ($(Cut1)$) ++(0,+150pt) -- ($(seg1)$) node (expS) {Short Exposure Time}; 
+        %\draw[dotted, ultra thick, transform canvas={xshift=+3.8em}] ($(Cut3)$)++(0,+30pt) -- ($(seg7)$) node (expL) {Long Exposure Time} ; 
+        
+    \end{tikzpicture}
+    \caption{First three steps of segmentation}
+    \label{fig:gridSegmentationExample}
+    
+\end{figure}
+\end{frame}
+
+\end{document}
